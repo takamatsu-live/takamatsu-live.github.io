@@ -1,11 +1,715 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-<meta charset="utf-8">
-<title>高松ライブカレンダー</title>
-</head>
-<body>
-<h1>高松ライブカレンダー</h1>
-<p>準備中</p>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="高松市内の小規模ライブハウス・カフェ・バーの公演をまとめたカレンダー。RUFFHOUSE／SO NICE／Nomad／THIRD STONE／燦庫のライブ情報。" />
+    <!-- アプリ風（ホーム画面に追加して全画面で開く） -->
+    <meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#171310" media="(prefers-color-scheme: dark)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="高松ライブ" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icon-180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+    <title>高松ライブカレンダー（公開版）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        --bg:#faf7f2; --bg2:#f3ede3; --card:#ffffff; --ink:#221c15; --ink2:#5d554a; --ink3:#8a7f70;
+        --line:#e5dccb; --accent:#b34a1d; --accent-ink:#ffffff;
+        --chip:#efe8da; --chip-on:#221c15; --chip-on-ink:#faf7f2;
+        --ruff:#8a5a1d; --ruff-bg:#f7ecd4;
+        --sonice:#1d5f6e; --sonice-bg:#dceef0;
+        --nomad:#3d5a3a; --nomad-bg:#e2edda;
+        --third:#6e3a5f; --third-bg:#f0e0ec;
+        --sanko:#9c2b2b; --sanko-bg:#f9e3e0;
+        --soldout:#b3261e; --today:#b34a1d;
+        --shadow:0 1px 2px rgba(34,28,21,.06),0 4px 14px rgba(34,28,21,.05);
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#171310; --bg2:#1e1915; --card:#241e18; --ink:#f0e9dd; --ink2:#c4b9a6; --ink3:#968a76;
+          --line:#3a322a; --accent:#e07a45; --accent-ink:#1c130c;
+          --chip:#2c251e; --chip-on:#f0e9dd; --chip-on-ink:#221c15;
+          --ruff:#e3b96a; --ruff-bg:#3a2f1a;
+          --sonice:#7cc4d4; --sonice-bg:#17333a;
+          --nomad:#a5cf9b; --nomad-bg:#22331f;
+          --third:#dba6cf; --third-bg:#38222f;
+          --sanko:#f0938d; --sanko-bg:#3a1f1d;
+          --soldout:#f0938d; --today:#e07a45;
+          --shadow:0 1px 2px rgba(0,0,0,.35),0 4px 14px rgba(0,0,0,.3);
+        }
+      }
+      *{box-sizing:border-box}
+      html{scroll-behavior:smooth}
+      body{margin:0;background:var(--bg);color:var(--ink);
+        font-family:"Noto Sans JP",-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+        line-height:1.65;-webkit-font-smoothing:antialiased}
+      a{color:var(--accent)}
+      .wrap{max-width:860px;margin:0 auto;padding:0 16px 56px}
+
+      /* ---------- header ---------- */
+      header{padding:34px 0 6px}
+      .kicker{font-size:12px;letter-spacing:.22em;font-weight:700;color:var(--accent);margin:0 0 8px}
+      h1{font-family:"Noto Serif JP",serif;font-weight:900;font-size:clamp(28px,6vw,42px);
+        line-height:1.25;margin:0 0 10px;letter-spacing:.01em}
+      .lede{margin:0;color:var(--ink2);font-size:15px;max-width:34em}
+      .meta-row{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:13px;color:var(--ink3)}
+      .meta-row b{color:var(--ink2);font-weight:700}
+
+      /* ---------- language toggle ---------- */
+      .lang-toggle{display:inline-flex;margin-top:16px;border:1px solid var(--line);border-radius:999px;
+        background:var(--card);padding:3px;box-shadow:var(--shadow)}
+      .lang-toggle button{appearance:none;border:0;background:transparent;color:var(--ink2);
+        font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:5px 16px;cursor:pointer}
+      .lang-toggle button[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink)}
+      .lang-toggle button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+      html[lang="en"] .fact .k{width:3.4em}
+
+      /* ---------- controls ---------- */
+      .controls{position:sticky;top:0;z-index:20;background:var(--bg);
+        padding:14px 0 10px;margin-top:18px;border-bottom:1px solid var(--line)}
+      .search{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
+        border-radius:10px;padding:0 12px;box-shadow:var(--shadow)}
+      .search svg{flex:none;color:var(--ink3)}
+      .search input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);
+        font:inherit;font-size:15px;padding:11px 0;outline:none}
+      .search input::placeholder{color:var(--ink3)}
+      .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+      .chip{appearance:none;border:1px solid var(--line);background:var(--chip);color:var(--ink);
+        font:inherit;font-size:13.5px;font-weight:700;border-radius:999px;padding:7px 14px;cursor:pointer}
+      .chip .n{font-weight:500;color:var(--ink3);margin-left:5px;font-size:12px}
+      .chip[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink);border-color:var(--chip-on)}
+      .chip[aria-pressed="true"] .n{color:inherit;opacity:.65}
+      .chip:focus-visible,.search:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+      .result-line{margin:12px 2px 0;font-size:13px;color:var(--ink3)}
+      .result-line b{color:var(--ink)}
+
+      /* ---------- list ---------- */
+      .day{margin-top:30px}
+      .day-head{display:flex;align-items:baseline;gap:10px;margin:0 2px 12px}
+      .day-head .dnum{font-family:"Noto Serif JP",serif;font-weight:900;font-size:24px}
+      .day-head .dow{font-size:13px;font-weight:700;color:var(--ink2)}
+      .day-head .dow.sat{color:#3d6fb8}.day-head .dow.sun,.day-head .dow.hol{color:#c0453e}
+      @media (prefers-color-scheme: dark){.day-head .dow.sat{color:#8db4e8}.day-head .dow.sun,.day-head .dow.hol{color:#e89a94}}
+      .today-badge{font-size:11px;font-weight:900;letter-spacing:.08em;color:var(--accent-ink);
+        background:var(--today);border-radius:4px;padding:2px 8px;vertical-align:2px}
+      .cards{display:grid;gap:12px}
+      @media (min-width:680px){.cards{grid-template-columns:1fr 1fr}.card.wide{grid-column:1/-1}}
+
+      .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+        padding:16px 16px 13px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:9px}
+      .card-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+      .badge{font-size:11.5px;font-weight:900;letter-spacing:.04em;border-radius:5px;padding:3px 9px;white-space:nowrap}
+      .b-ruff{color:var(--ruff);background:var(--ruff-bg)}
+      .b-sonice{color:var(--sonice);background:var(--sonice-bg)}
+      .b-nomad{color:var(--nomad);background:var(--nomad-bg)}
+      .b-third{color:var(--third);background:var(--third-bg)}
+      .b-sanko{color:var(--sanko);background:var(--sanko-bg)}
+      .sub-venue{font-size:12px;color:var(--ink3);font-weight:500}
+      .soldout{margin-left:auto;font-size:11.5px;font-weight:900;color:var(--soldout);
+        border:1.5px solid var(--soldout);border-radius:5px;padding:2px 8px;letter-spacing:.06em}
+      .card h3{margin:0;font-size:17px;line-height:1.45;font-weight:900}
+      .card h3 .subtitle{display:block;font-size:13.5px;font-weight:700;color:var(--ink2);margin-top:3px}
+      .perf{margin:0;font-size:13.5px;color:var(--ink2)}
+      .perf b{color:var(--ink);font-weight:700}
+      .facts{display:grid;gap:5px;font-size:14px}
+      .fact{display:flex;gap:9px;align-items:flex-start}
+      .fact svg{flex:none;margin-top:3px;color:var(--ink3)}
+      .fact .k{flex:none;width:3.2em;font-size:12px;font-weight:700;color:var(--ink3);padding-top:2px}
+      .note{margin:0;font-size:12.5px;color:var(--ink3)}
+      .card-foot{margin-top:auto;padding-top:10px;border-top:1px dashed var(--line);
+        display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+      .ticket{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:var(--accent-ink);
+        font-size:13.5px;font-weight:900;text-decoration:none;border-radius:8px;padding:8px 14px}
+      .ticket:hover{filter:brightness(1.08)}
+      .src{margin-left:auto;font-size:12.5px;color:var(--ink3);text-decoration:none;
+        display:inline-flex;align-items:center;gap:4px}
+      .src:hover{color:var(--accent);text-decoration:underline}
+
+      .empty{display:none;text-align:center;padding:52px 16px;color:var(--ink2)}
+      .empty.show{display:block}
+      .empty .big{font-family:"Noto Serif JP",serif;font-size:19px;font-weight:700;color:var(--ink);margin:0 0 6px}
+      .empty p{margin:0;font-size:14px}
+      .clear-btn{margin-top:16px;appearance:none;border:1px solid var(--line);background:var(--card);
+        color:var(--ink);font:inherit;font-size:13.5px;font-weight:700;border-radius:8px;padding:8px 16px;cursor:pointer}
+
+      /* ---------- venues / footer ---------- */
+      .venue-sec{margin-top:48px}
+      .venue-sec h2,.about-sec h2{font-family:"Noto Serif JP",serif;font-size:20px;font-weight:900;margin:0 0 14px}
+      .venue-list{display:grid;gap:10px}
+      @media (min-width:680px){.venue-list{grid-template-columns:1fr 1fr}}
+      .venue-item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+      .venue-item h3{margin:0 0 4px;font-size:15px;font-weight:900;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+      .venue-item p{margin:0;font-size:13px;color:var(--ink2)}
+      .venue-item a{font-size:13px;font-weight:700;text-decoration:none}
+      .venue-item a:hover{text-decoration:underline}
+      footer{margin-top:44px;border-top:1px solid var(--line);padding-top:20px;
+        font-size:13px;color:var(--ink2);display:grid;gap:10px}
+      footer p{margin:0}
+      footer .upd{color:var(--ink3);font-size:12.5px}
+      /* ---------- アプリ風 ---------- */
+      body{-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}
+      button,.chip,.ticket,.tab{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+      .controls{top:env(safe-area-inset-top,0px)}
+      .wrap{padding-bottom:calc(56px + env(safe-area-inset-bottom,0px))}
+      @media (min-width:760px){.wrap{padding-bottom:56px}}
+
+      /* インストール案内 */
+      .install-sec{margin-top:48px;background:var(--card);border:1px solid var(--line);
+        border-radius:12px;padding:18px 16px 14px;box-shadow:var(--shadow)}
+      .install-sec h2{font-family:"Noto Serif JP",serif;font-size:20px;font-weight:900;margin:0 0 8px;
+        display:flex;align-items:center;gap:10px}
+      .install-sec h2 img{width:34px;height:34px;border-radius:8px;flex:none}
+      .install-sec .lead{margin:0;font-size:14px;color:var(--ink2)}
+      .install-grid{display:grid;gap:14px;margin-top:14px}
+      @media (min-width:680px){.install-grid{grid-template-columns:1fr 1fr}}
+      .install-box{background:var(--bg2);border-radius:10px;padding:12px 14px}
+      .install-box h3{margin:0 0 6px;font-size:14px;font-weight:900}
+      .install-box ol{margin:0;padding-left:1.25em;font-size:13.5px;color:var(--ink2)}
+      .install-box ol li{margin:3px 0}
+      .install-sec .note2{margin:12px 0 2px;font-size:12.5px;color:var(--ink3)}
+      .install-sec .warn{margin:14px 0 2px;background:var(--sanko-bg);border-radius:10px;
+        padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+      .install-sec .warn img{width:32px;height:32px;border-radius:7px;flex:none;margin-top:2px}
+      .install-sec .warn p{margin:0;font-size:13.5px;color:var(--ink)}
+      .install-sec .warn b{font-weight:900}
+      .venue-sec,.install-sec{scroll-margin-top:96px}
+      @media (display-mode: standalone){.install-sec{display:none}}
+
+      /* 下部タブバー（アプリ風ナビ） */
+      .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;
+        background:var(--card);border-top:1px solid var(--line);
+        padding-bottom:env(safe-area-inset-bottom,0px);
+        display:flex;justify-content:space-around;
+        box-shadow:0 -2px 14px rgba(34,28,21,.08)}
+      .tab{appearance:none;border:0;background:transparent;color:var(--ink3);
+        font:inherit;cursor:pointer;flex:1;min-height:56px;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+        font-size:11px;font-weight:700;text-decoration:none;padding:6px 2px}
+      .tab svg{flex:none}
+      .tab[aria-pressed="true"],.tab.on{color:var(--accent)}
+      .tab:active{transform:scale(.96)}
+      .tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+      @media (min-width:760px){
+        .tabbar{left:50%;right:auto;transform:translateX(-50%);bottom:18px;
+          width:430px;max-width:calc(100vw - 32px);border:1px solid var(--line);
+          border-radius:999px;padding-bottom:0;box-shadow:var(--shadow)}
+        .tab{min-height:52px;border-radius:999px}
+      }
+      .card{transition:transform .12s ease}
+      .card:active{transform:scale(.995)}
+
+      @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.card{transition:none}.tab:active{transform:none}}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <p class="kicker">TAKAMATSU LIVE CALENDAR</p>
+        <h1 id="page-title">高松ライブカレンダー</h1>
+        <p class="lede" id="lede">高松市内の小さなライブハウス、カフェ、バーで開かれる公演を、日付順にまとめたカレンダーです。気になる一夜を見つけてください。</p>
+        <div class="meta-row">
+          <span><span id="meta-updated-label">最終更新：</span><b id="meta-updated">2026年11月7日</b></span>
+          <span><span id="meta-count-label">掲載公演：</span><b id="total-count">—</b></span>
+        </div>
+        <div class="lang-toggle" role="group" aria-label="Language / 言語">
+          <button type="button" id="lang-ja" aria-pressed="true">日本語</button>
+          <button type="button" id="lang-en" aria-pressed="false">English</button>
+        </div>
+
+      </header>
+
+      <div class="controls">
+        <label class="search">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+          <input id="q" type="search" placeholder="出演者・公演名で検索" autocomplete="off" aria-label="出演者・公演名で検索" />
+        </label>
+        <div class="chips" id="chips" role="group" aria-label="会場で絞り込み" data-i18n-aria="chipsLabel"></div>
+        <p class="result-line" id="result-line" aria-live="polite"></p>
+      </div>
+
+      <main id="list" aria-label="これからのライブ一覧" data-i18n-aria="listLabel"></main>
+
+      <div class="empty" id="empty">
+        <p class="big" id="empty-big">条件に合う公演がありません</p>
+        <p id="empty-sub">検索ワードや会場フィルタを変えてお試しください。</p>
+        <button class="clear-btn" id="clear" type="button">絞り込みをクリア</button>
+      </div>
+
+      <section class="install-sec" id="install" aria-labelledby="install-h">
+        <h2 id="install-h"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAGh0lEQVR4nO3d228UZRjH8ad1CUJi4UICQU1c7pCEwgUaYwQSLkyMJCaoJIZr5eCVSoyo/4LGRPH0F7SAx0AtHqKxNAXBCAmUcFHBbkMCpUppt8m0u/WCkGDpdmfn9M47v+/nykg7+2b3+fadmW7bNkvZd88+Mpv2Y6C4th8bbkvz+IkfnIFHmpIOIpGDMfRwIYkYYh2AwUcexAmhPeonMvzIiziz2HI5DD7yrNXdoKUdgOFH3rU6o6EDYPjhi1ZmNVQADD98E3ZmmwbA8MNXYWZ3wQAYfviu2Qw3vGL2bfifOXK+4b/17liX4UqKo0jPaaO7Q/PuAEUa/jD/jnsV7TltNNORvxGWF2FfCN9eMJeUntN7AvDpq3+rL0ARXrC0Ffk5nW+2Sz4NPBDX3Hn3/hQIiIMAII0AII0AII0AII0AII0AII0AII0AII0AII0AII0AII0AII0AII0AII0AII0AII0AII0AII0AIM3rAFr95Uy+/TInF9SeU68DMAv/Avj+QmVJ6Tn1PgCz5i9EEV6orKk8p238XiAoK8QOAERFAJBGAJBGAJBGAJBGAJBGAJBGAJBGAJBGAJBGAJBGAJBGAJBGAJBGAJBGAJBGAJBGAJDWtubhFfxIJGSxA0AaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUAaAUBayfUCVCxevNja2+9r+nG12owFQZDBimBGAJn56OCn9vTmzU0/7lB3l733zoEMVgQzToEgjgAgjQAgjQAgjQAgjQAgTervA/zy2wlbtWqV62Xk2shIxbZt3eJ6GZlhB4A0AoA0AoA0AoA0AoA0AoA0AoA0qbdD//zTj7Zs2XLXy8i1f8bGXC8hU1LfCAPm4hQI0ggA0qSuAaJYuXKl/drX73oZkTz15BN2Y3TU9TJyjR0A0ggA0ggA0ggA0ggA0rgLlJC/r1yxykgl9cdZumSpbdi4MfXHUUEACTnU3WVffP5Z6o9TLq+xnuM/pP44KjgFgjQCgDQCgDQCgDTeDt0E7wUqNnYASCMASCMASCMASCMASOOtEE0EQWD9/SdcLyOS6elp10vIPW6DQhqnQJBGAJAmew2wdu1jtvqh1a6XkRsnBwZsYmLC9TIyJxvAy7t22Ysv7XS9jNx4fvtzdvHioOtlZI5TIEgjAEgjAEgjAEgjAEgjAEgjAEiT/T5AWDtf2GFnz/7pehmR9fUP2IMrVrheRm6xA0AaAUAaAUAa1wAxdHZusK7DR5yuYf26tRYEgdM1+IwdANIIANIIANIIANIIANK4C5SyG6Ojdu36tUifW360bPcvWZLwinA3AkhZd3eXffjB+5E+t+vQYevcwN8DSxOnQJBGAJBGAJBGAJDGRXDK9uzdZ3v27nO9DDTADgBpBABpBFBgHR0dtmz58lAfO1ObSXcxOcU1gOf27nvNqlNTVpuZsXq9bmZmpVLJHujosE2bHrdFixaFOs6t8fE0l5lbBOC53QldYI+P30rkOL7hFAhWrVZtaqrqehlOlIYq1/kzSSn65ODHkd8LtJBXXt1tr7+5P5FjnTo5kMhxfDNUud7GDuCpY0ePJnasE319iR3LNwTgqUpl2M6dOxv7OFevXrWvvnT7g/0ucREcQxAENjJSWfBjxlO8u9Lb02Pr13dG/vx6vW7vHnhb8k8j3UEAMQwOXrBtW7c4e/zTp09H/tzh4WF7a/8b9seZMwmuyD8ls9sXA1wI+2fwwnmbnp4Ofa+/VqvZ76dO2fc9x+zbb762alXzzo/Z7Zk3E94BZuuzVqvVXC8jliAI7Hhvr5XLZavX61afrVu9VrdqddImJydtcmLSxsZu2OXLl+2voSG7dOmS3bz5r+tl50rbnf9gB4CSOztA+9z/ARTd3bPObVBI+18A7AIourkzzg4AafcEwC6AoppvttkBIG3eANgFUDSNZpodANIaBsAugKJYaJYX3AGIAL5rNsOcAkFa0wDYBeCrMLMbagcgAvgm7MyGPgUiAviilVlt6RqACJB3rc5oyxfBRIC8ijKbke4CEQHyJupMRr4NSgTIizizGOv7AEQA1+LOYOxvhBEBXEli9hIdXn6wHllI8otuom+FYDdA2pKesdQGlt0ASUrri2vqX7EJAXGkfVaR2SkLIaAVWZ1OZ37OTghYSNbXkU4vWokBZm5vnuTurg1RFFve7hT+B74p347xv8heAAAAAElFTkSuQmCC" alt="" width="34" height="34" /><span id="install-title">ブックマークして開く</span></h2>
+        <p class="lead" id="install-lead">このページは、SafariやChromeのブックマーク／お気に入りに入れて開くのが確実です。内容は毎朝自動で最新に更新されます。</p>
+        <div class="install-grid">
+          <div class="install-box">
+            <h3 id="ios-h">iPhone（Safari）</h3>
+            <ol id="ios-steps"><li>Safariそのものでこのページを開く（メッセンジャーなどから開いた場合は、先にSafariで開き直す）</li><li>画面下の共有ボタン（□に↑）をタップ</li><li>「ホーム画面に追加」を選ぶと、カレンダーのアイコンがホーム画面に置けます</li></ol>
+          </div>
+          <div class="install-box">
+            <h3 id="and-h">Android（Chrome）</h3>
+            <ol id="and-steps"><li>このページをChromeで開く</li><li>右上の「︙」メニューをタップ</li><li>「ホーム画面に追加」（または「アプリをインストール」）を選ぶと、カレンダーのアイコンがホーム画面に置けます</li></ol>
+          </div>
+        </div>
+        <p class="note2" id="install-note">メッセンジャーやLINEなどのアプリ内ブラウザでは開けない場合があります。その場合はメニューの「外部ブラウザで開く」／「Safariで開く」から、SafariやChromeで開き直してください。</p>
+        <div class="warn">
+          <img src="data:image/png;base64,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" alt="" width="32" height="32" />
+          <p id="install-warn-text"><b>ホーム画面に追加できます。</b>iPhoneはSafariで開いて共有ボタンから「ホーム画面に追加」、AndroidはChromeの「︙」メニューから「ホーム画面に追加」を選ぶと、カレンダーのアイコンがホーム画面に置けて、アプリのように開けます。</p>
+        </div>
+      </section>
+
+      <section class="venue-sec" id="venues-sec" aria-labelledby="venues-h">
+        <h2 id="venues-h">掲載会場</h2>
+        <div class="venue-list">
+          <div class="venue-item">
+            <h3><span class="badge b-ruff">RUFFHOUSE</span></h3>
+            <p id="v-ruff-desc">Music&amp;Live RUFFHOUSE（2F）／ Music Bar RUFFHOUSE（1F）<br />香川県高松市常磐町1-7-3 BSCビル（ことでん瓦町駅近く）</p>
+            <p style="margin-top:6px"><a href="https://www.barruffhouse.com/" target="_blank" rel="noopener" id="v-ruff-link">公式サイト barruffhouse.com</a></p>
+          </div>
+          <div class="venue-item">
+            <h3><span class="badge b-sonice">SO NICE</span></h3>
+            <p id="v-sonice-desc">jazz&amp;bar SO NICE<br />香川県高松市丸亀町9-7 杉山ビル2F</p>
+            <p style="margin-top:6px"><a href="https://ameblo.jp/sonice72/entry-12982746373.html" target="_blank" rel="noopener" id="v-sonice-link">公式ブログ（11月スケジュール）</a></p>
+          </div>
+          <div class="venue-item">
+            <h3><span class="badge b-nomad">Nomad</span></h3>
+            <p id="v-nomad-desc">ジャズバー Nomad<br />香川県高松市瓦町1-11-17 QUEEN'S SQUARE PART2 2F</p>
+            <p style="margin-top:6px"><a href="https://nomad-music.net/november-2026/" target="_blank" rel="noopener" id="v-nomad-link">公式サイト（11月スケジュール）</a></p>
+          </div>
+          <div class="venue-item">
+            <h3><span class="badge b-third">THIRD STONE</span></h3>
+            <p id="v-third-desc">高松 THIRD STONE（ミュージック＆ブックカフェ＆バー）<br />香川県高松市東山崎町387-5（ことでん水田駅近く）</p>
+            <p style="margin-top:6px"><a href="https://thirdstone.info/" target="_blank" rel="noopener" id="v-third-link">公式サイト thirdstone.info</a></p>
+          </div>
+          <div class="venue-item">
+            <h3><span class="badge b-sanko" id="v-sanko-badge">燦庫</span></h3>
+            <p id="v-sanko-desc">LIVE HOUSE 燦庫 -SANKO-<br />香川県高松市亀井町8-8 菊池寛通りFLビル 2F/3F</p>
+            <p style="margin-top:6px"><a href="https://san-ko.site/schedule/" target="_blank" rel="noopener" id="v-sanko-link">公式スケジュール san-ko.site</a></p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p id="foot-1">このカレンダーは、高松市内の小規模なライブハウス・カフェ・バー（RUFFHOUSE／SO NICE／Nomad／THIRD STONE／燦庫）の公演を中心に掲載しています。詳細は各公演の出典リンク先でご確認ください。</p>
+        <p id="foot-2">公演内容・時刻・料金は変更になる場合があります。お出かけ前に、出典リンク先の公式情報で最新情報をご確認ください。</p>
+        <p class="upd" id="foot-upd">最終更新：2026年11月7日（掲載情報は各会場の公式発表に基づきます）</p>
+      </footer>
+    </div>
+
+    <nav class="tabbar" aria-label="表示切替" id="tabbar">
+      <button type="button" class="tab" data-period="all" aria-pressed="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        <span data-tab-label="all">すべて</span>
+      </button>
+      <button type="button" class="tab" data-period="today" aria-pressed="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span data-tab-label="today">今日</span>
+      </button>
+      <button type="button" class="tab" data-period="week" aria-pressed="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        <span data-tab-label="week">今週</span>
+      </button>
+      <a class="tab" href="#venues-sec" id="tab-venues">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        <span data-tab-label="venues">会場</span>
+      </a>
+    </nav>
+
+    <script>
+      /* 2026-11-07 時点のスナップショット（各会場の公式情報源より） */
+      var SRC = {
+        ruff: "https://www.barruffhouse.com/",
+        sonice: "https://ameblo.jp/sonice72/entry-12982746373.html",
+        nomad: "https://nomad-music.net/november-2026/",
+        sanko: "https://san-ko.site/schedule/"
+      };
+      var EVENTS = [
+/* ============ RUFFHOUSE ============ */
+{d:"2026-11-07", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"シカゴプードル", sub2:"TOUR\u3010三響一会 vol.1\u3011高松公演", perf:"シカゴプードル", open:"16:30", start:"17:00", price:"前売 ¥6,000／当日 ¥6,500（ドリンク代別途 ¥600）", soldout:true, src:SRC.ruff},
+{d:"2026-11-11", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"ハシケン", sub2:"ハシケンLIVE『道はどこまでも』in 高松", perf:"ハシケン（ボーカル、ギター他）", open:"19:00", start:"19:30", price:"前売 ¥3,000／当日 ¥3,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/529578", src:SRC.ruff},
+{d:"2026-11-13", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"THE COCKS", sub2:"Headline GiG “Chaos” Phase.2", perf:"THE COCKS", open:"20:00", start:"20:30", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/526317", src:SRC.ruff},
+{d:"2026-11-14", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"鈴木トオル", sub2:"Love in City 2026 高松／tempo a autunno", perf:"鈴木トオル（Vo.G）", open:"17:30", start:"18:00", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/520468", src:SRC.ruff},
+{d:"2026-11-15", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"杉田 裕（from:JAYWALK）", sub2:"HIROSHI SUGITA SOLO TOUR 2026 Autumn -DRIVE MY CAR-", perf:"杉田 裕（from:JAYWALK）", open:"17:30", start:"18:00", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/522150", src:SRC.ruff},
+{d:"2026-11-17", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"浪花クレオール ＆ 松旭斎天蝶", sub2:"「昭和音曲手品ショー」", perf:"唄と演奏：浪花クレオール（カオリーニョ藤原、山村誠一、井山あきのり）／手品：松旭斎天蝶", open:"19:00", start:"19:30", price:"前売 ¥3,000／当日 ¥3,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/507930", src:SRC.ruff},
+{d:"2026-11-18", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"The Sleeping Boosters", sub2:"伊藤大輔 × 竹中俊二 ＜高松公演＞", perf:"The Sleeping Boosters（伊藤大輔 × 竹中俊二）", open:"19:00", start:"19:30", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/492251", src:SRC.ruff},
+{d:"2026-11-20", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"詩野", sub2:"「HUGしに行くよ♡」ツアー 高松公演", perf:"詩野 w/ 狩野幸子、黒猫のミヤ、北真紗子", open:"19:00", start:"19:30", price:"前売 ¥2,500／当日 ¥3,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/530690", src:SRC.ruff},
+{d:"2026-11-21", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"前田和亮", sub2:"ワンマンライブ『秋風の通り道 ＜香川編＞』", perf:"前田和亮", open:"19:00", start:"19:30", price:"前売 ¥3,500／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/521926", src:SRC.ruff},
+{d:"2026-11-22", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"中川敬（ソウル・フラワー・ユニオン）× リクオ", sub2:"うたのありか2026 〜中川敬還暦／ニューエストモデル結成40周年〜 高松編", perf:"中川敬（ソウル・フラワー・ユニオン）× リクオ", open:"17:00", start:"17:30", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/515967", src:SRC.ruff},
+{d:"2026-11-23", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"浜端ヨウヘイ", sub2:"LIVE TOUR 2026 “HERE AND THERE” in 高松", perf:"浜端ヨウヘイ", open:"17:30", start:"18:00", price:"前売 ¥4,500／当日 ¥5,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/521121", src:SRC.ruff},
+{d:"2026-11-24", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"さっことアモーレ", sub2:"アルバム「さっことアモーレ - Live Recording」リリースツアー ＜高松公演＞", perf:"さっことアモーレ／OA：カミカワミレイ feat.納田牧人", open:"19:00", start:"19:30", price:"前売 ¥3,500／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/523904", src:SRC.ruff},
+{d:"2026-11-25", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"エキサイト中條", sub2:"マンスリーエキサイトタイムズ！11月号", perf:"エキサイト中條", open:"19:30", start:"20:00", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/535517", src:SRC.ruff},
+{d:"2026-11-27", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"和-IZUMI-（橘いずみ）", sub2:"冬のアコギジャカジャカ旅 高松へ", perf:"和-IZUMI-（橘いずみ）／OA：ボヌール、iN BODY", open:"19:00", start:"19:30", price:"前売 ¥4,500／当日 ¥5,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/524188", src:SRC.ruff},
+{d:"2026-11-28", v:"ruff", sub:"Music Bar RUFFHOUSE", title:"噂のレコード鑑賞会 vol.70", perf:"昭和歌謡からロック、ポップス、ジャズまで、レコードを聴く鑑賞会（おひとり1曲リクエスト可）", open:"18:00", start:"18:15", price:"入場料 ¥1,000（飲物代別途・食べ物のみ持込可）", note:"会場は1階のBARスペース。ご視聴だけの方は飲物代＋チャージ ¥300。", src:SRC.ruff},
+{d:"2026-12-05", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"染西まつり", sub2:"『三色スペシャル歌弁当〜それ絶対ウマいやつ〜@高松編』", perf:"染谷俊、西広ショータ、ぶらりふたり放浪記", open:"15:00", start:"15:30", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/534261", src:SRC.ruff},
+{d:"2026-12-06", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"聞間拓 × 山口こうじ", sub2:"ツーマンライブ〜熱いだけじゃない夜に", perf:"聞間拓、山口こうじ", open:"17:30", start:"18:00", price:"前売 ¥3,000／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/530681", src:SRC.ruff},
+{d:"2026-12-13", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"君の心に届く歌", perf:"市川セカイ、前田和亮、KAZU OF THE LEGEND", open:"18:00", start:"18:30", price:"前売 ¥3,500／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/534356", src:SRC.ruff},
+{d:"2026-12-20", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"Nakamura Hak", sub2:"「Plugless（Out-store）Live Tour – 異端」", perf:"Nakamura Hak", open:"17:30", start:"18:00", price:"", note:"1st E.P.「白は夢」をご購入の方は無料で入場できるツアーです。", src:SRC.ruff},
+{d:"2026-12-26", v:"ruff", sub:"Music Bar RUFFHOUSE", title:"ナウなヤングの流行歌", sub2:"〜昭和が終わる頃、コミックバンドやってたボクたちの好きな歌〜（DJイベント）", perf:"クロオとフジタマン／リクエスト読み上げ：中條加菜（西日本放送アナウンサー）", open:"", start:"", price:"¥500（1オーダー制）", note:"昭和歌謡ときどき洋楽をレコードで。約500曲のリストからリクエストできます。", src:SRC.ruff},
+{d:"2027-01-19", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"山羊座な男たち", sub2:"〜Three Singer-Songwriters under the Capricorn〜", perf:"加藤ヒデキ、嶋田エイジ、エキサイト中條", open:"19:30", start:"20:00", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/529090", src:SRC.ruff},
+{d:"2027-01-23", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"はたなか圭一", sub2:"OVERPLAY Kagawa Final -Solo Style-", perf:"はたなか圭一", open:"14:00", start:"14:30", price:"前売 ¥3,000／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/528388", src:SRC.ruff},
+{d:"2027-01-31", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"Pink Panther☆", sub2:"ワンマンライブ「Dialogue」", perf:"Pink Panther☆（鍵盤ハーモニカ、ピアノ、カホン）", open:"14:00", start:"14:30", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/533897", src:SRC.ruff},
+{d:"2027-02-07", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"Yesterday & Today", sub2:"〜昨日の音を今日の唄に〜", perf:"嶋田エイジ、Fullcount！、歳時記", open:"17:30", start:"18:00", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/534795", src:SRC.ruff},
+{d:"2027-02-11", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"とびだせ！シンガーソングライター VOL.8", perf:"井上美喜、加藤ヒデキ、嶋田エイジ／ゲスト：佐藤亙", open:"17:00", start:"17:30", price:"前売 ¥2,500／当日 ¥3,000（ドリンク代別途 ¥600）", src:SRC.ruff},
+{d:"2027-04-07", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"FIRST STEP", sub2:"〜RUFFHOUSEのブッキングライブ〜\u3010出演者募集\u3011", perf:"出演者募集中（申込締切：開催10日前）", open:"19:00", start:"19:30", price:"", note:"定期開催のブッキングライブ。出演希望の方は公式サイトからお問い合わせください。", src:SRC.ruff},
+
+/* ============ SO NICE ============ */
+{d:"2026-11-07", v:"sonice", title:"とみどうく（昼の部）", perf:"工藤隆（pf）、冨川政嗣（ds）", open:"", start:"15:00", price:"ミュージックチャージ ¥3,000", src:SRC.sonice},
+{d:"2026-11-07", v:"sonice", title:"なつどうく（夜の部）", perf:"工藤隆（pf）、河西那都（vo）", open:"", start:"19:00", price:"ミュージックチャージ ¥3,000", src:SRC.sonice},
+{d:"2026-11-08", v:"sonice", title:"今陽子 with 秋田慎治＆太田剣", perf:"今陽子、秋田慎治、太田剣", open:"", start:"", price:"", soldout:true, src:SRC.sonice},
+{d:"2026-11-10", v:"sonice", title:"唐口一之 LIVE＆SESSION", perf:"唐口一之（tp）、鶴岡雅子（pf）、浜野光男（bs）", open:"", start:"19:30", price:"ミュージックチャージ ¥3,000", src:SRC.sonice},
+{d:"2026-11-13", v:"sonice", title:"関根彰", sub2:"New album「Weaving Voices」リリースツアー", perf:"関根彰（gt）", open:"", start:"19:30", price:"ミュージックチャージ ¥3,800", src:SRC.sonice},
+{d:"2026-11-21", v:"sonice", title:"情家みえ LIVE", perf:"情家みえ（vo）、田窪寛之（pf）、池尻洋史（ba）、小松伸之（ds）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,500", src:SRC.sonice},
+{d:"2026-11-24", v:"sonice", title:"清水夏生＆松下福寿 LIVE TOUR 2026", perf:"清水夏生（Tapdance）、松下福寿（pf）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,000", src:SRC.sonice},
+{d:"2026-11-27", v:"sonice", title:"森村献＆佐野聡 お遍路二人旅2026", perf:"森村献（pf）、佐野聡（Tb）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,000（当日 ¥4,500）", src:SRC.sonice},
+{d:"2026-11-28", v:"sonice", title:"Noodle Crazy Monkey ➕", perf:"藤原清登（bs）、河西那都（vo）、廣田健一郎（ds）ほか", open:"", start:"19:30", price:"ミュージックチャージ ¥4,000", src:SRC.sonice},
+{d:"2026-11-30", v:"sonice", title:"佐藤達哉＋早川由紀子 ジャズライブ＠高松", perf:"佐藤達哉（ts）、早川由紀子（pf）、廣嶋顕治（bs）、生田知保（drums）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,500", src:SRC.sonice},
+
+/* ============ Nomad ============ */
+{d:"2026-11-07", v:"nomad", title:"香大Jazz研主催セッション", perf:"Pf. 江口大樹、Ba. 中谷雅行、Ds. 荒木美脈", open:"", start:"20:00", price:"一般 ¥1,500＋税／学生 ¥1,200＋税", note:"毎月第1土曜開催のセッション。観覧・参加どちらも歓迎。", src:SRC.nomad},
+{d:"2026-11-14", v:"nomad", title:"MANHATTANZ Live at 高松 Nomad", perf:"Sax Kazuki Kitamori、Guitar Michio Takeuchi、Bass Ryunosuke Makino、Keyboard Shin Tsujimoto、Drums Shota Yajima", open:"18:30", start:"19:00", price:"チャージ ¥3,000（別途オーダー）", src:SRC.nomad},
+{d:"2026-11-21", v:"nomad", title:"Nomad Jazz Session（スペシャルセッション）", perf:"Pf. 西川崇代・大軒聖子、Gt. 小笠原岳海、Bs. 岩間学、Ds. 木所誠、Vo. Rie NeCo・Yuma・Miwako", open:"", start:"20:00", price:"チャージ ¥2,000＋税／学生 ¥1,500＋税", note:"20:00〜23:00。毎月第3土曜のセッションDay、この回はスペシャルセッション。", src:SRC.nomad},
+{d:"2026-11-27", v:"nomad", title:"HAYATO SATO & FRIENDS Vol.3", perf:"Hayato Sato ほか（メンバーは決まり次第お知らせ）", open:"20:00", start:"20:30", price:"ミュージックチャージ ¥2,200（税込）＋1ドリンク", note:"1st 20:30／2nd 21:30。", src:SRC.nomad},
+{d:"2026-11-28", v:"nomad", title:"CHAKA ライブ with 瀬部妙子", perf:"CHAKA、Pf. 瀬部妙子", open:"15:30", start:"16:00", price:"チャージ ¥3,000（別途1ドリンク）", note:"お問い合わせは主催 shikoku.live@gmail.com まで。", src:SRC.nomad},
+
+/* ============ THIRD STONE ============ */
+{d:"2026-11-14", v:"third", title:"武内正陽 Solo Tour 2026", sub2:"〜山陰〜山陽〜四国〜北部九州", perf:"武内正陽／OA：津村有香とQuis Guitars、デヴィッド近藤、Mina Sako", open:"19:00", start:"19:30", price:"入場料 ¥2,500（ドリンク別）", src:"https://thirdstone.info/event/%e6%ad%a6%e5%86%85%e6%ad%a3%e9%99%bd-solo-tour-2026-%e5%b1%b1%e9%99%b0%e5%b1%b1%e9%99%bd%e5%9b%9b%e5%9b%bd%e5%8c%97%e9%83%a8%e4%b9%9d%e5%b7%9e/"},
+{d:"2026-11-15", v:"third", title:"hozzy＆田中ユウイチ弾き語りツアー2026-2027", sub2:"“半月酒場 〜 ÷ THE MOON 〜”", perf:"hozzy、田中ユウイチ", open:"16:30", start:"17:00", price:"前売 ¥4,000／当日 ¥4,500（ドリンク別）", src:"https://thirdstone.info/event/hozzy%e7%94%b0%e4%b8%ad%e3%83%a6%e3%82%a6%e3%82%a4%e3%83%81%e5%bc%be%e3%81%8d%e8%aa%9e%e3%82%8a%e3%83%84%e3%82%a2%e3%83%bc2026-2027%e5%8d%8a%e6%9c%88%e9%85%92%e5%a0%b4-%e3%80%9c-%c3%b7-the/"},
+{d:"2026-11-22", v:"third", title:"ワタナベマモル 夢の晩秋ロックンロール2026", perf:"ワタナベマモル／OA：cabaret、THE COCKS", open:"19:00", start:"19:30", price:"チャージ ¥2,500（ドリンク別）", src:"https://thirdstone.info/"},
+
+/* ============ 燦庫 -SANKO- ============ */
+{d:"2026-11-07", v:"sanko", title:"さとう。LIVE TOUR 『語らう日々をかけめぐる』", perf:"さとう。", open:"16:30", start:"17:00", price:"¥4,800／¥5,300（+1ドリンクオーダー）", ticket:"https://www.duke.co.jp/ticket-detail/3202/", ticketLabel:"チケット（DUKE）", src:"https://san-ko.site/events/%e3%81%95%e3%81%a8%e3%81%86%e3%80%82live-tour-%e3%80%8e%e8%aa%9e%e3%82%89%e3%81%86%e6%97%a5%e3%80%85%e3%82%92%e3%81%8b%e3%81%91%e3%82%81%e3%81%90%e3%82%8b%e3%80%8f/"},
+{d:"2026-11-11", v:"sanko", title:"Tim Holehouse JAPAN TOUR", perf:"Tim Holehouse、Yuki Teratani and more", open:"19:30", start:"20:00", price:"¥1,000（+1ドリンクオーダー）", src:"https://san-ko.site/events/tim-holehouse-japan-tour/"},
+{d:"2026-11-13", v:"sanko", title:"んねじれる presents", perf:"", open:"", start:"", price:"", note:"詳細は出典リンク先でご確認ください。", src:"https://san-ko.site/events/%e3%82%93%e3%81%ad%e3%81%98%e3%82%8c%e3%82%8b-presents/"},
+{d:"2026-11-14", v:"sanko", title:"LATIN NIGHT", perf:"", open:"", start:"", price:"", note:"詳細は出典リンク先でご確認ください。", src:"https://san-ko.site/events/latin-night/"},
+{d:"2026-11-15", v:"sanko", title:"Interesting Results & 成レノ果テ presents “RESULTS 成果 推介會”", perf:"LOVELOVE、殺して38、武鑓隼太、Douglas、ウパルパengei、NOSNIKA、5cm assholes、GIVE ME BACK!、後藤さとみ、The Naked Launches、lopess、Interesting Results ほか", open:"13:00", start:"13:00", price:"¥2,000／¥2,500（+1ドリンクオーダー）", src:"https://san-ko.site/events/interesting-results-%e6%88%90%e3%83%ac%e3%83%8e%e6%9e%9c%e3%83%86-presents-results-%e6%88%90%e6%9e%9c-%e6%8e%a8%e4%bb%8b%e6%9c%83/"},
+{d:"2026-11-16", v:"sanko", title:"No Sneer presents “熱血大集合祭”", sub2:"25 U SING “SMASH!!GROOM!!!!! TOUR” TOONICE & 燦庫-SANKO- 2STAGE", perf:"No Sneer、25 U SING、YeRrMiI、nearmiss、Bright Road、ノーハイプ、Human DISSECTION 〆 potatosalad club、MONMON", open:"17:30", start:"18:00", price:"¥1,000／¥1,500（+1ドリンクオーダー）", src:"https://san-ko.site/events/no-sneer-presents-%e7%86%b1%e8%a1%80%e5%a4%a7%e9%9b%86%e5%90%88%e7%a5%ad-25-u-sing-smashgroom-tour-toonice-%e7%87%a6%e5%ba%ab-sanko-2stage/"},
+{d:"2026-11-17", v:"sanko", title:"LATIN NIGHT", perf:"", open:"", start:"", price:"", note:"詳細は出典リンク先でご確認ください。", src:"https://san-ko.site/events/latin-night-2/"},
+{d:"2026-11-18", v:"sanko", title:"武内正陽 Solo Tour 2026", perf:"武内正陽、スタンドアップ法話 釈慈浪（眞行寺）、横倉英城、CABARET", open:"18:00", start:"18:30", price:"¥2,500／¥3,000（+1ドリンクオーダー）", src:"https://san-ko.site/events/event-2/"},
+{d:"2026-11-20", v:"sanko", title:"Risa Takeda solo tour 2026", perf:"武田理沙、Deadpudding、_shu、lopess", open:"19:00", start:"19:30", price:"¥2,000／¥2,500（+1ドリンクオーダー）", src:"https://san-ko.site/events/event-3/"},
+{d:"2026-11-21", v:"sanko", title:"「と或る視点 2」", perf:"Mio Takeyama、空耳アユミ、ymhr、セガ・ボッテガ、_shu、Masami Takashima／出店：きゅう、TWIN SHIPS RECORDS", open:"18:00", start:"18:30", price:"¥2,500／¥3,000（+1ドリンクオーダー）", src:"https://san-ko.site/events/event-4/"}
+];
+
+var VENUES = [
+{id:"all", label:{ja:"すべて", en:"All"}},
+{id:"ruff", label:{ja:"RUFFHOUSE", en:"RUFFHOUSE"}, badge:"b-ruff"},
+{id:"sonice", label:{ja:"SO NICE", en:"SO NICE"}, badge:"b-sonice"},
+{id:"nomad", label:{ja:"Nomad", en:"Nomad"}, badge:"b-nomad"},
+{id:"third", label:{ja:"THIRD STONE", en:"THIRD STONE"}, badge:"b-third"},
+{id:"sanko", label:{ja:"燦庫", en:"SANKO"}, badge:"b-sanko"}
+];
+var BADGE = {ruff:"RUFFHOUSE", sonice:"SO NICE", nomad:"Nomad", third:"THIRD STONE", sanko:"燦庫"};
+var BADGE_EN = {ruff:"RUFFHOUSE", sonice:"SO NICE", nomad:"Nomad", third:"THIRD STONE", sanko:"SANKO"};
+var DOW = ["日","月","火","水","木","金","土"];
+var DOW_EN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+var MON_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var HOLIDAYS = {"2026-11-23":1, "2027-02-11":1};
+
+/* ---------- 日英切り替え ---------- */
+var I18N = {
+ja:{
+  docTitle:"高松ライブカレンダー（公開版）",
+  title:"高松ライブカレンダー",
+  lede:"高松市内の小さなライブハウス、カフェ、バーで開かれる公演を、日付順にまとめたカレンダーです。気になる一夜を見つけてください。",
+  updatedLabel:"最終更新：", updatedDate:"2026年11月7日", countLabel:"掲載公演：", countSuffix:"公演",
+  searchPh:"出演者・公演名で検索", searchAria:"出演者・公演名で検索",
+  chipsLabel:"会場で絞り込み", listLabel:"これからのライブ一覧",
+  emptyBig:"条件に合う公演がありません", emptySub:"検索ワードや会場フィルタを変えてお試しください。", clear:"絞り込みをクリア",
+  venuesH:"掲載会場",
+  perfLabel:"出演", timeLabel:"時間", priceLabel:"料金",
+  doors:"開場", start:"開演", timeSep:"／",
+  ticket:"チケット・予約", dukeTicket:"チケット（DUKE）", source:"出典：公式情報",
+  today:"本日",
+  tabbarLabel:"表示切替", tabAll:"すべて", tabToday:"今日", tabWeek:"今週", tabVenues:"会場",
+  installTitle:"ブックマークして開く",
+  installLead:"このページは、SafariやChromeのブックマーク／お気に入りに入れて開くのが確実です。内容は毎朝自動で最新に更新されます。",
+  iosH:"iPhone（Safari）",
+  iosSteps:"<li>Safariそのものでこのページを開く（メッセンジャーなどから開いた場合は、先にSafariで開き直す）</li><li>画面下の共有ボタン（□に↑）をタップ</li><li>「ホーム画面に追加」を選ぶと、カレンダーのアイコンがホーム画面に置けます</li>",
+  andH:"Android（Chrome）",
+  andSteps:"<li>このページをChromeで開く</li><li>右上の「︙」メニューをタップ</li><li>「ホーム画面に追加」（または「アプリをインストール」）を選ぶと、カレンダーのアイコンがホーム画面に置けます</li>",
+  installNote:"メッセンジャーやLINEなどのアプリ内ブラウザでは開けない場合があります。その場合はメニューの「外部ブラウザで開く」／「Safariで開く」から、SafariやChromeで開き直してください。",
+  installWarn:"このページはホーム画面に追加できます。iPhoneはSafariで開いて共有ボタンから「ホーム画面に追加」、AndroidはChromeの「︙」メニューから「ホーム画面に追加」を選ぶと、カレンダーのアイコンがホーム画面に置けて、アプリのように開けます。",
+  noMatch:"該当する公演はありません",
+  venues:{
+    ruffDesc:'Music&Live RUFFHOUSE（2F）／ Music Bar RUFFHOUSE（1F）<br>香川県高松市常磐町1-7-3 BSCビル（ことでん瓦町駅近く）',
+    ruffLink:"公式サイト barruffhouse.com",
+    soniceDesc:'jazz&bar SO NICE<br>香川県高松市丸亀町9-7 杉山ビル2F',
+    soniceLink:"公式ブログ（11月スケジュール）",
+    nomadDesc:'ジャズバー Nomad<br>香川県高松市瓦町1-11-17 QUEEN\'S SQUARE PART2 2F',
+    nomadLink:"公式サイト（11月スケジュール）",
+    thirdDesc:'高松 THIRD STONE（ミュージック＆ブックカフェ＆バー）<br>香川県高松市東山崎町387-5（ことでん水田駅近く）',
+    thirdLink:"公式サイト thirdstone.info",
+    sankoBadge:"燦庫",
+    sankoDesc:'LIVE HOUSE 燦庫 -SANKO-<br>香川県高松市亀井町8-8 菊池寛通りFLビル 2F/3F',
+    sankoLink:"公式スケジュール san-ko.site"
+  },
+  foot1:"このカレンダーは、高松市内の小規模なライブハウス・カフェ・バー（RUFFHOUSE／SO NICE／Nomad／THIRD STONE／燦庫）の公演を中心に掲載しています。詳細は各公演の出典リンク先でご確認ください。",
+  foot2:"公演内容・時刻・料金は変更になる場合があります。お出かけ前に、出典リンク先の公式情報で最新情報をご確認ください。",
+  footUpd:"最終更新：2026年11月7日（掲載情報は各会場の公式発表に基づきます）"
+},
+en:{
+  docTitle:"Takamatsu Live Calendar",
+  title:"Takamatsu Live Calendar",
+  lede:"A date-by-date guide to live shows at Takamatsu's small live houses, cafés and bars. Find a night out that suits you.",
+  updatedLabel:"Last updated: ", updatedDate:"Nov 7, 2026", countLabel:"Shows listed: ", countSuffix:" shows",
+  searchPh:"Search by artist or show title", searchAria:"Search by artist or show title",
+  chipsLabel:"Filter by venue", listLabel:"Upcoming live shows",
+  emptyBig:"No shows match your filters", emptySub:"Try a different search term or venue filter.", clear:"Clear filters",
+  venuesH:"Venues",
+  perfLabel:"Lineup", timeLabel:"Time", priceLabel:"Price",
+  doors:"Doors", start:"Starts", timeSep:" / ",
+  ticket:"Tickets / Reservations", dukeTicket:"Tickets (DUKE)", source:"Source: official info",
+  today:"Today",
+  tabbarLabel:"Switch view", tabAll:"All", tabToday:"Today", tabWeek:"This week", tabVenues:"Venues",
+  installTitle:"Bookmark this page",
+  installLead:"The reliable way to reopen this calendar is from your browser bookmarks / favorites in Safari or Chrome. The listings are refreshed automatically every morning.",
+  iosH:"iPhone (Safari)",
+  iosSteps:"<li>Open this page in Safari itself \u2014 if you arrived from Messenger or another app, reopen it in Safari first</li><li>Tap the Share button (\u25a1 with \u2191) at the bottom</li><li>Choose \u201CAdd to Home Screen\u201D. The calendar icon will be added to your home screen</li>",
+  andH:"Android (Chrome)",
+  andSteps:"<li>Open this page in Chrome</li><li>Tap the \u201C\u22ee\u201D menu at the top right</li><li>Choose \u201CAdd to Home screen\u201D (or \u201CInstall app\u201D). The calendar icon will be added to your home screen</li>",
+  installNote:"This page may not load in in-app browsers such as Messenger or LINE. If so, use \u201COpen in external browser\u201D / \u201COpen in Safari\u201D in the app's menu to reopen it in Safari or Chrome.",
+  installWarn:"You can add this page to your home screen. On iPhone, open it in Safari and choose \u201CAdd to Home Screen\u201D from the Share menu; on Android, open it in Chrome and choose \u201CAdd to Home screen\u201D from the \u201C\u22ee\u201D menu. The calendar icon will open just like an app.",
+  noMatch:"No matching shows",
+  venues:{
+    ruffDesc:'Music&Live RUFFHOUSE (2F) / Music Bar RUFFHOUSE (1F)<br>BSC Bldg., 1-7-3 Tokiwa-cho, Takamatsu, Kagawa (near Kotoden Kawaramachi Station)',
+    ruffLink:"Official site: barruffhouse.com",
+    soniceDesc:'jazz&bar SO NICE<br>Sugiyama Bldg. 2F, 9-7 Marugame-machi, Takamatsu, Kagawa',
+    soniceLink:"Official blog (November schedule, in Japanese)",
+    nomadDesc:'Jazz Bar Nomad<br>QUEEN\'S SQUARE PART2 2F, 1-11-17 Kawaramachi, Takamatsu, Kagawa',
+    nomadLink:"Official site (November schedule, in Japanese)",
+    thirdDesc:'Takamatsu THIRD STONE (music & book café / bar)<br>387-5 Higashiyamazaki-cho, Takamatsu, Kagawa (near Kotoden Mizuta Station)',
+    thirdLink:"Official site: thirdstone.info",
+    sankoBadge:"SANKO",
+    sankoDesc:'LIVE HOUSE SANKO<br>FL Bldg. 2F/3F, 8-8 Kamei-cho, Takamatsu, Kagawa',
+    sankoLink:"Official schedule: san-ko.site"
+  },
+  foot1:"This calendar focuses on shows at small live houses, cafés and bars in Takamatsu (RUFFHOUSE / SO NICE / Nomad / THIRD STONE / SANKO). See each show's source link for full details.",
+  foot2:"Lineups, times and prices may change. Please check the official source link for the latest information before you go.",
+  footUpd:"Last updated: Nov 7, 2026 (based on each venue's official announcements)"
+}};
+
+var state = { venue:"all", q:"", lang:"ja", period:"all"};
+function T(){ return I18N[state.lang]; }
+function badgeOf(v){ return state.lang==="en"? BADGE_EN[v]: BADGE[v]; }
+
+/* 料金・備考の定型表現だけを英語化（固有名詞・タイトルはそのまま） */
+function localizeText(s){
+if (state.lang!=="en" || !s) return s||"";
+var pairs = [
+["詳細は出典リンク先でご確認ください。","See the official source link for details."],
+["ミュージックチャージ","Music charge"],
+["（ドリンク代別途 ¥600）"," (+ ¥600 drink charge)"],
+["（ドリンク代別途）"," (drink charge extra)"],
+["ドリンク代別途","drink charge extra"],
+["（別途オーダー）"," (food/drink order required)"],
+["（別途1ドリンク）"," (+ 1 drink order)"],
+["（+1ドリンクオーダー）"," (+ 1 drink order)"],
+["+1ドリンクオーダー"," + 1 drink order"],
+["＋1ドリンク"," + 1 drink"],
+["前売","Adv."],["当日","Door"],
+["入場料","Admission"],
+["チャージ","Charge"],
+["（ドリンク別）"," (drinks not included)"],
+["ドリンク別","drinks not included"],
+["（税込）"," (tax incl.)"],["税込","tax incl."],
+["＋税"," + tax"],["+税"," + tax"],
+["一般","General"],["学生","Students"]
+];
+for (var i=0;i<pairs.length;i++){ s = s.split(pairs[i][0]).join(pairs[i][1]); }
+return s;
+}
+
+function applyLang(){
+var t = T();
+document.documentElement.lang = state.lang;
+document.title = t.docTitle;
+document.getElementById("page-title").textContent = t.title;
+document.getElementById("lede").textContent = t.lede;
+document.getElementById("meta-updated-label").textContent = t.updatedLabel;
+document.getElementById("meta-updated").textContent = t.updatedDate;
+document.getElementById("meta-count-label").textContent = t.countLabel;
+document.getElementById("total-count").textContent = EVENTS.length + t.countSuffix;
+var q = document.getElementById("q");
+q.placeholder = t.searchPh; q.setAttribute("aria-label", t.searchAria);
+document.querySelectorAll("[data-i18n-aria]").forEach(function(el){ el.setAttribute("aria-label", t[el.dataset.i18nAria]); });
+document.getElementById("empty-big").textContent = t.emptyBig;
+document.getElementById("empty-sub").textContent = t.emptySub;
+document.getElementById("clear").textContent = t.clear;
+document.getElementById("venues-h").textContent = t.venuesH;
+document.getElementById("v-ruff-desc").innerHTML = t.venues.ruffDesc;
+document.getElementById("v-ruff-link").textContent = t.venues.ruffLink;
+document.getElementById("v-sonice-desc").innerHTML = t.venues.soniceDesc;
+document.getElementById("v-sonice-link").textContent = t.venues.soniceLink;
+document.getElementById("v-nomad-desc").innerHTML = t.venues.nomadDesc;
+document.getElementById("v-nomad-link").textContent = t.venues.nomadLink;
+document.getElementById("v-third-desc").innerHTML = t.venues.thirdDesc;
+document.getElementById("v-third-link").textContent = t.venues.thirdLink;
+document.getElementById("v-sanko-badge").textContent = t.venues.sankoBadge;
+document.getElementById("v-sanko-desc").innerHTML = t.venues.sankoDesc;
+document.getElementById("v-sanko-link").textContent = t.venues.sankoLink;
+document.getElementById("foot-1").textContent = t.foot1;
+document.getElementById("foot-2").textContent = t.foot2;
+document.getElementById("foot-upd").textContent = t.footUpd;
+document.getElementById("tabbar").setAttribute("aria-label", t.tabbarLabel);
+document.querySelectorAll("[data-tab-label]").forEach(function(el){
+var k = el.dataset.tabLabel;
+el.textContent = k==="all"? t.tabAll: k==="today"? t.tabToday: k==="week"? t.tabWeek: t.tabVenues;
+});
+document.getElementById("install-title").textContent = t.installTitle;
+document.getElementById("install-lead").textContent = t.installLead;
+document.getElementById("ios-h").textContent = t.iosH;
+document.getElementById("ios-steps").innerHTML = t.iosSteps;
+document.getElementById("and-h").textContent = t.andH;
+document.getElementById("and-steps").innerHTML = t.andSteps;
+document.getElementById("install-note").textContent = t.installNote;
+document.getElementById("install-warn-text").textContent = t.installWarn;
+document.getElementById("lang-ja").setAttribute("aria-pressed", state.lang==="ja"? "true": "false");
+document.getElementById("lang-en").setAttribute("aria-pressed", state.lang==="en"? "true": "false");
+chipsEl.querySelectorAll(".chip").forEach(function(c){
+var v = VENUES.filter(function(x){ return x.id===c.dataset.venue; })[0];
+if (v) c.firstChild.textContent = v.label[state.lang];
+});
+render();
+}
+function setLang(l){ if (state.lang!==l){ state.lang = l; } applyLang(); }
+document.getElementById("lang-ja").addEventListener("click", function(){ setLang("ja"); });
+document.getElementById("lang-en").addEventListener("click", function(){ setLang("en"); });
+var listEl = document.getElementById("list");
+var emptyEl = document.getElementById("empty");
+var resultEl = document.getElementById("result-line");
+var chipsEl = document.getElementById("chips");
+
+function esc(s){ return String(s||"").replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function pad(n){ return (n<10?"0":"")+n;}
+function todayStr(){ var t=new Date(); return t.getFullYear()+"-"+pad(t.getMonth()+1)+"-"+pad(t.getDate());}
+
+/* 会場フィルタ */
+VENUES.forEach(function(v){
+var n = v.id==="all"? EVENTS.length: EVENTS.filter(function(e){return e.v===v.id;}).length;
+var b = document.createElement("button");
+b.type = "button"; b.className = "chip"; b.dataset.venue = v.id;
+b.setAttribute("aria-pressed", v.id==="all"? "true": "false");
+b.innerHTML = esc(v.label[state.lang]) + '<span class="n">' + n + "</span>";
+b.addEventListener("click", function(){
+state.venue = v.id;
+chipsEl.querySelectorAll(".chip").forEach(function(c){ c.setAttribute("aria-pressed", c.dataset.venue===v.id? "true":"false");});
+render();
+});
+chipsEl.appendChild(b);
+});
+document.getElementById("total-count").textContent = EVENTS.length + "公演";
+
+document.getElementById("q").addEventListener("input", function(e){ state.q = e.target.value.trim().toLowerCase(); render();});
+document.getElementById("clear").addEventListener("click", function(){
+state.q=""; state.venue="all"; state.period="all"; document.getElementById("q").value="";
+chipsEl.querySelectorAll(".chip").forEach(function(c){ c.setAttribute("aria-pressed", c.dataset.venue==="all"? "true":"false");});
+document.querySelectorAll(".tab[data-period]").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.period==="all"? "true":"false");});
+render();
+});
+
+/* 下部タブバー：期間フィルタ */
+document.querySelectorAll(".tab[data-period]").forEach(function(b){
+b.addEventListener("click", function(){
+state.period = b.dataset.period;
+document.querySelectorAll(".tab[data-period]").forEach(function(x){ x.setAttribute("aria-pressed", x===b? "true":"false");});
+render();
+window.scrollTo({top:0, behavior:"smooth"});
+});
+});
+
+function matches(e){
+if (state.venue!=="all" && e.v!==state.venue) return false;
+if (state.period==="today" && e.d!==todayStr()) return false;
+if (state.period==="week"){
+var t0 = todayStr();
+var p = t0.split("-");
+var end = new Date(+p[0], +p[1]-1, +p[2]+7);
+var endStr = end.getFullYear()+"-"+pad(end.getMonth()+1)+"-"+pad(end.getDate());
+if (e.d < t0 || e.d > endStr) return false;
+}
+if (!state.q) return true;
+var hay = (e.title+" "+(e.sub2||"")+" "+(e.perf||"")+" "+BADGE[e.v]+" "+BADGE_EN[e.v]).toLowerCase();
+return hay.indexOf(state.q)!== -1;
+}
+
+function iconClock(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';}
+function iconYen(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3v18M7 21h10M6 8.5c1.8 1.6 3.8 2.4 6 2.4s4.2-.8 6-2.4M5.5 13.5h13M5.5 17h13"/></svg>';}
+function iconTicket(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2.5 2.5 0 0 0 0 5v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1a2.5 2.5 0 0 0 0-5z"/><path d="M13 6v2M13 11v2M13 16v2"/></svg>';}
+function iconExt(){ return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4L11 13M9 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-3"/></svg>';}
+
+function cardHTML(e){
+var t = T();
+var h = '<article class="card">';
+h += '<div class="card-top"><span class="badge b-' + e.v + '">' + esc(badgeOf(e.v)) + "</span>";
+if (e.sub && e.v==="ruff") h += '<span class="sub-venue">' + esc(e.sub) + "</span>";
+if (e.soldout) h += '<span class="soldout">SOLD OUT</span>';
+h += "</div>";
+h += "<h3>" + esc(e.title);
+if (e.sub2) h += '<span class="subtitle">' + esc(e.sub2) + "</span>";
+h += "</h3>";
+if (e.perf) h += '<p class="perf"><b>' + esc(t.perfLabel) + "</b>　" + esc(e.perf) + "</p>";
+h += '<div class="facts">';
+if (e.open || e.start){
+var tm = "";
+if (e.open) tm += t.doors + " " + e.open;
+if (e.open && e.start) tm += t.timeSep;
+if (e.start) tm += t.start + " " + e.start;
+h += '<div class="fact">' + iconClock() + '<span class="k">' + esc(t.timeLabel) + '</span><span>' + esc(tm) + "</span></div>";
+}
+if (e.price) h += '<div class="fact">' + iconYen() + '<span class="k">' + esc(t.priceLabel) + '</span><span>' + esc(localizeText(e.price)) + "</span></div>";
+h += "</div>";
+if (e.note) h += '<p class="note">' + esc(localizeText(e.note)) + "</p>";
+h += '<div class="card-foot">';
+if (e.ticket) h += '<a class="ticket" href="' + esc(e.ticket) + '" target="_blank" rel="noopener">' + iconTicket() + esc(e.ticketLabel? (state.lang==="en"? t.dukeTicket: e.ticketLabel): t.ticket) + "</a>";
+h += '<a class="src" href="' + esc(e.src) + '" target="_blank" rel="noopener">' + esc(t.source) + " " + iconExt() + "</a>";
+h += "</div></article>";
+return h;
+}
+
+function render(){
+var t = T();
+var items = EVENTS.filter(matches);
+items.sort(function(a,b){ return a.d < b.d? -1: a.d > b.d? 1: 0;});
+var today = todayStr();
+var html = "", lastDay = "";
+items.forEach(function(e){
+if (e.d!== lastDay){
+if (lastDay) html += "</div></section>";
+var parts = e.d.split("-");
+var dt = new Date(+parts[0], +parts[1]-1, +parts[2]);
+var dowCls = dt.getDay()===0? "sun": dt.getDay()===6? "sat": (HOLIDAYS[e.d]? "hol": "");
+var dateLabel, dowLabel;
+if (state.lang==="en"){
+dateLabel = MON_EN[+parts[1]-1] + " " + (+parts[2]);
+dowLabel = DOW_EN[dt.getDay()] + (HOLIDAYS[e.d]? " · Holiday": "");
+} else {
+dateLabel = (+parts[1]) + "月" + (+parts[2]) + "日";
+dowLabel = DOW[dt.getDay()] + (HOLIDAYS[e.d]? "・祝": "");
+}
+html += '<section class="day"><h2 class="day-head"><span class="dnum">' + dateLabel + '</span><span class="dow ' + dowCls + '">（' + dowLabel + "）</span>";
+if (e.d === today) html += '<span class="today-badge">' + esc(t.today) + "</span>";
+if (+parts[0]!== 2026) html += '<span class="dow">' + (state.lang==="en"? parts[0]: parts[0] + "年") + "</span>";
+html += '</h2><div class="cards">';
+lastDay = e.d;
+}
+html += cardHTML(e);
+});
+if (lastDay) html += "</div></section>";
+listEl.innerHTML = html;
+emptyEl.classList.toggle("show", items.length===0);
+if (items.length===0){
+resultEl.textContent = t.noMatch;
+} else if (state.lang==="en"){
+resultEl.innerHTML = "Showing <b>" + items.length + " shows</b>" + (state.venue!=="all" || state.q || state.period!=="all"? " (filtered)": " (of " + EVENTS.length + ")");
+} else {
+resultEl.innerHTML = "<b>" + items.length + "公演</b>を表示中" + (state.venue!=="all" || state.q || state.period!=="all"? "（絞り込み中）": "（" + EVENTS.length + "公演中）");
+}
+}
+applyLang();
+</script>
 </body>
 </html>
