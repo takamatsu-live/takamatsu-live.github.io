@@ -47,7 +47,7 @@
         }
       }
       *{box-sizing:border-box}
-      html{scroll-behavior:smooth}
+      html{scroll-behavior:smooth;scroll-padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
       body{margin:0;background:var(--bg);color:var(--ink);
         font-family:"Noto Sans JP",-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
         line-height:1.65;-webkit-font-smoothing:antialiased}
@@ -158,7 +158,9 @@
       body{-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none}
       button,.chip,.ticket,.tab{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
       .controls{top:env(safe-area-inset-top,0px)}
-      .wrap{padding-bottom:calc(56px + env(safe-area-inset-bottom,0px))}
+      .wrap{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+      .card,.venue-item,.install-sec,footer{scroll-margin-bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+      .card a,.venue-item a,footer a{scroll-margin-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
       @media (min-width:760px){.wrap{padding-bottom:56px}}
 
       /* インストール案内 */
@@ -216,7 +218,7 @@
         <h1 id="page-title">高松ライブカレンダー</h1>
         <p class="lede" id="lede">高松市内の小さなライブハウス、カフェ、バーで開かれる公演を、日付順にまとめたカレンダーです。気になる一夜を見つけてください。</p>
         <div class="meta-row">
-          <span><span id="meta-updated-label">最終更新：</span><b id="meta-updated">2026年11月8日</b></span>
+          <span><span id="meta-updated-label">最終更新：</span><b id="meta-updated">2026年11月9日</b></span>
           <span><span id="meta-count-label">掲載公演：</span><b id="total-count">—</b></span>
         </div>
         <div class="lang-toggle" role="group" aria-label="Language / 言語">
@@ -297,7 +299,7 @@
       <footer>
         <p id="foot-1">このカレンダーは、高松市内の小規模なライブハウス・カフェ・バー（RUFFHOUSE／SO NICE／Nomad／THIRD STONE／燦庫）の公演を中心に掲載しています。詳細は各公演の出典リンク先でご確認ください。</p>
         <p id="foot-2">公演内容・時刻・料金は変更になる場合があります。お出かけ前に、出典リンク先の公式情報で最新情報をご確認ください。</p>
-        <p class="upd" id="foot-upd">最終更新：2026年11月8日（掲載情報は各会場の公式発表に基づきます）</p>
+        <p class="upd" id="foot-upd">最終更新：2026年11月9日（掲載情報は各会場の公式発表に基づきます）</p>
       </footer>
     </div>
 
@@ -321,7 +323,7 @@
     </nav>
 
     <script>
-      /* 2026-11-08 時点のスナップショット（各会場の公式情報源より） */
+      /* 2026-11-09 時点のスナップショット（各会場の公式情報源より） */
       var SRC = {
         ruff: "https://www.barruffhouse.com/",
         sonice: "https://ameblo.jp/sonice72/entry-12982746373.html",
@@ -334,7 +336,7 @@
 {d:"2026-11-13", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"THE COCKS", sub2:"Headline GiG “Chaos” Phase.2", perf:"THE COCKS", open:"20:00", start:"20:30", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/526317", src:SRC.ruff},
 {d:"2026-11-14", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"鈴木トオル", sub2:"Love in City 2026 高松／tempo a autunno", perf:"鈴木トオル（Vo.G）", open:"17:30", start:"18:00", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/520468", src:SRC.ruff},
 {d:"2026-11-15", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"杉田 裕（from:JAYWALK）", sub2:"HIROSHI SUGITA SOLO TOUR 2026 Autumn -DRIVE MY CAR-", perf:"杉田 裕（from:JAYWALK）", open:"17:30", start:"18:00", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/522150", src:SRC.ruff},
-{d:"2026-11-17", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"浪花クレオール ＆ 松旭斎天蝶", sub2:"「昭和音曲手品ショー」", perf:"唄と演奏：浪花クレオール（カオリーニョ藤原、山村誠一、井山あきのり）／手品：松旭斎天蝶", open:"19:00", start:"19:30", price:"前売 ¥3,000／当日 ¥3,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/507930", src:SRC.ruff},
+{d:"2026-11-17", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"【SOLD OUT】浪花クレオール ＆ 松旭斎天蝶", sub2:"「昭和音曲手品ショー」", perf:"唄と演奏：浪花クレオール（カオリーニョ藤原、山村誠一、井山あきのり）／手品：松旭斎天蝶", open:"19:00", start:"19:30", price:"前売 ¥3,000／当日 ¥3,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/507930", src:SRC.ruff},
 {d:"2026-11-18", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"The Sleeping Boosters", sub2:"伊藤大輔 × 竹中俊二 ＜高松公演＞", perf:"The Sleeping Boosters（伊藤大輔 × 竹中俊二）", open:"19:00", start:"19:30", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/492251", src:SRC.ruff},
 {d:"2026-11-20", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"詩野", sub2:"「HUGしに行くよ♡」ツアー 高松公演", perf:"詩野 w/ 狩野幸子、黒猫のミヤ、北真紗子", open:"19:00", start:"19:30", price:"前売 ¥2,500／当日 ¥3,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/530690", src:SRC.ruff},
 {d:"2026-11-21", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"前田和亮", sub2:"ワンマンライブ『秋風の通り道 ＜香川編＞』", perf:"前田和亮", open:"19:00", start:"19:30", price:"前売 ¥3,500／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/521926", src:SRC.ruff},
@@ -343,7 +345,7 @@
 {d:"2026-11-24", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"さっことアモーレ", sub2:"アルバム「さっことアモーレ - Live Recording」リリースツアー ＜高松公演＞", perf:"さっことアモーレ／OA：カミカワミレイ feat.納田牧人", open:"19:00", start:"19:30", price:"前売 ¥3,500／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/523904", src:SRC.ruff},
 {d:"2026-11-25", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"エキサイト中條", sub2:"マンスリーエキサイトタイムズ！11月号", perf:"エキサイト中條", open:"19:30", start:"20:00", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/535517", src:SRC.ruff},
 {d:"2026-11-27", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"和-IZUMI-（橘いずみ）", sub2:"冬のアコギジャカジャカ旅 高松へ", perf:"和-IZUMI-（橘いずみ）／OA：ボヌール、iN BODY", open:"19:00", start:"19:30", price:"前売 ¥4,500／当日 ¥5,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/524188", src:SRC.ruff},
-{d:"2026-11-28", v:"ruff", sub:"Music Bar RUFFHOUSE", title:"噂のレコード鑑賞会 vol.70", perf:"昭和歌謡からロック、ポップス、ジャズまで、レコードを聴く鑑賞会（おひとり1曲リクエスト可）", open:"18:00", start:"18:15", price:"入場料 ¥1,000（飲物代別途・食べ物のみ持込可）", note:"会場は1階のBARスペース。ご視聴だけの方は飲物代＋チャージ ¥300。", src:SRC.ruff},
+{d:"2026-11-28", v:"ruff", sub:"Music Bar RUFFHOUSE", title:"レコード鑑賞会 vol.70", sub2:"噂のレコード鑑賞会 vol.70", perf:"昭和歌謡からロック、ポップス、ジャズまで、レコードを聴く鑑賞会（おひとり1曲リクエスト可）", open:"18:00", start:"18:15", price:"入場料 ¥1,000（飲物代別途・食べ物のみ持込可）", note:"会場は1階のBARスペース。ご視聴だけの方は飲物代＋チャージ ¥300。", src:SRC.ruff},
 {d:"2026-12-05", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"染西まつり", sub2:"『三色スペシャル歌弁当〜それ絶対ウマいやつ〜@高松編』", perf:"染谷俊、西広ショータ、ぶらりふたり放浪記", open:"15:00", start:"15:30", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/534261", src:SRC.ruff},
 {d:"2026-12-06", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"聞間拓 × 山口こうじ", sub2:"ツーマンライブ〜熱いだけじゃない夜に", perf:"聞間拓、山口こうじ", open:"17:30", start:"18:00", price:"前売 ¥3,000／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/530681", src:SRC.ruff},
 {d:"2026-12-13", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"君の心に届く歌", perf:"市川セカイ、前田和亮、KAZU OF THE LEGEND", open:"18:00", start:"18:30", price:"前売 ¥3,500／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/534356", src:SRC.ruff},
@@ -359,10 +361,9 @@
 {d:"2027-04-07", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"FIRST STEP", sub2:"〜RUFFHOUSEのブッキングライブ〜\u3010出演者募集\u3011", perf:"出演者募集中（申込締切：開催10日前）", open:"19:00", start:"19:30", price:"前売 ¥1,500／当日 ¥2,000（+1ドリンク ¥600）", ticket:"https://ruffhouse.bitfan.id/schedules/130148?fbclid=IwZXh0bgNhZW0CMTAAcGRvZgVzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEfJrB968y2tjph281UgCDua654AprvjtzdZCNBPt-VPOU2TsLWQfyEUQq8GKA_aem_uP9BMtsbdaNJVdvEJUOC-A", note:"定期開催のブッキングライブ。出演希望の方は公式サイトからお問い合わせください。", src:SRC.ruff},
 
 /* ============ SO NICE ============ */
-{d:"2026-11-08", v:"sonice", title:"今陽子 with 秋田慎治＆太田剣", perf:"今陽子、秋田慎治、太田剣", open:"", start:"", price:"", soldout:true, src:SRC.sonice},
-{d:"2026-11-10", v:"sonice", title:"唐口一之 LIVE＆SESSION", perf:"唐口一之（tp）、鶴岡雅子（pf）、浜野光男（bs）", open:"", start:"19:30", price:"ミュージックチャージ ¥3,000", src:SRC.sonice},
+{d:"2026-11-10", v:"sonice", title:"唐口一之LIVE＆SESSION", perf:"唐口一之（tp）、鶴岡雅子（pf）、浜野光男（bs）", open:"", start:"19:30", price:"ミュージックチャージ ¥3,000", src:SRC.sonice},
 {d:"2026-11-13", v:"sonice", title:"関根彰", sub2:"New album「Weaving Voices」リリースツアー", perf:"関根彰（gt）", open:"", start:"19:30", price:"ミュージックチャージ ¥3,800", src:SRC.sonice},
-{d:"2026-11-21", v:"sonice", title:"情家みえ LIVE", perf:"情家みえ（vo）、田窪寛之（pf）、池尻洋史（ba）、小松伸之（ds）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,500", src:SRC.sonice},
+{d:"2026-11-21", v:"sonice", title:"情家みえLIVE", perf:"情家みえ（vo）、田窪寛之（pf）、池尻洋史（ba）、小松伸之（ds）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,500", src:SRC.sonice},
 {d:"2026-11-24", v:"sonice", title:"清水夏生＆松下福寿 LIVE TOUR 2026", perf:"清水夏生（Tapdance）、松下福寿（pf）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,000", src:SRC.sonice},
 {d:"2026-11-27", v:"sonice", title:"森村献＆佐野聡 お遍路二人旅2026", perf:"森村献（pf）、佐野聡（Tb）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,000（当日 ¥4,500）", src:SRC.sonice},
 {d:"2026-11-28", v:"sonice", title:"Noodle Crazy Monkey ➕", perf:"藤原清登（bs）、河西那都（vo）、廣田健一郎（ds）ほか", open:"", start:"19:30", price:"ミュージックチャージ ¥4,000", src:SRC.sonice},
@@ -380,7 +381,7 @@
 {d:"2026-11-22", v:"third", title:"ワタナベマモル 夢の晩秋ロックンロール2026", perf:"ワタナベマモル／OA：cabaret、THE COCKS", open:"19:00", start:"19:30", price:"チャージ ¥2,500（ドリンク別）", src:"https://thirdstone.info/event/%e3%83%af%e3%82%bf%e3%83%8a%e3%83%99%e3%83%9e%e3%83%a2%e3%83%ab-%e5%a4%a2%e3%81%ae%e6%99%a9%e7%a7%8b%e3%83%ad%e3%83%83%e3%82%af%e3%83%b3%e3%83%ad%e3%83%bc%e3%83%ab2026/"},
 
 /* ============ 燦庫 -SANKO- ============ */
-{d:"2026-11-11", v:"sanko", title:"Tim Holehouse JAPAN TOUR", perf:"Tim Holehouse、Yuki Teratani and more", open:"19:30", start:"20:00", price:"¥1,000（+1ドリンクオーダー）", src:"https://san-ko.site/events/tim-holehouse-japan-tour/"},
+{d:"2026-11-11", v:"sanko", title:"Tim Holehouse JAPAN TOUR", perf:"Tim Holehouse、Yuki Teratani", open:"19:30", start:"20:00", price:"FREE (+2DRINK ORDER)", src:"https://san-ko.site/events/tim-holehouse-japan-tour/"},
 {d:"2026-11-13", v:"sanko", title:"んねじれる presents", perf:"", open:"", start:"", price:"", note:"詳細は出典リンク先でご確認ください。", src:"https://san-ko.site/events/%e3%82%93%e3%81%ad%e3%81%98%e3%82%8c%e3%82%8b-presents/"},
 {d:"2026-11-14", v:"sanko", title:"LATIN NIGHT", perf:"", open:"", start:"", price:"", note:"詳細は出典リンク先でご確認ください。", src:"https://san-ko.site/events/latin-night/"},
 {d:"2026-11-15", v:"sanko", title:"Interesting Results & 成レノ果テ presents “RESULTS 成果 推介會”", perf:"LOVELOVE、殺して38、武鑓隼太、Douglas、ウパルパengei、NOSNIKA、5cm assholes、GIVE ME BACK!、後藤さとみ、The Naked Launches、lopess、Interesting Results ほか", open:"13:00", start:"13:00", price:"¥2,000／¥2,500（+1ドリンクオーダー）", src:"https://san-ko.site/events/interesting-results-%e6%88%90%e3%83%ac%e3%83%8e%e6%9e%9c%e3%83%86-presents-results-%e6%88%90%e6%9e%9c-%e6%8e%a8%e4%bb%8b%e6%9c%83/"},
@@ -413,7 +414,7 @@ ja:{
   docTitle:"高松ライブカレンダー（公開版）",
   title:"高松ライブカレンダー",
   lede:"高松市内の小さなライブハウス、カフェ、バーで開かれる公演を、日付順にまとめたカレンダーです。気になる一夜を見つけてください。",
-  updatedLabel:"最終更新：", updatedDate:"2026年11月8日", countLabel:"掲載公演：", countSuffix:"公演",
+  updatedLabel:"最終更新：", updatedDate:"2026年11月9日", countLabel:"掲載公演：", countSuffix:"公演",
   searchPh:"出演者・公演名で検索", searchAria:"出演者・公演名で検索",
   chipsLabel:"会場で絞り込み", listLabel:"これからのライブ一覧",
   emptyBig:"条件に合う公演がありません", emptySub:"検索ワードや会場フィルタを変えてお試しください。", clear:"絞り込みをクリア",
@@ -447,13 +448,13 @@ ja:{
   },
   foot1:"このカレンダーは、高松市内の小規模なライブハウス・カフェ・バー（RUFFHOUSE／SO NICE／Nomad／THIRD STONE／燦庫）の公演を中心に掲載しています。詳細は各公演の出典リンク先でご確認ください。",
   foot2:"公演内容・時刻・料金は変更になる場合があります。お出かけ前に、出典リンク先の公式情報で最新情報をご確認ください。",
-  footUpd:"最終更新：2026年11月8日（掲載情報は各会場の公式発表に基づきます）"
+  footUpd:"最終更新：2026年11月9日（掲載情報は各会場の公式発表に基づきます）"
 },
 en:{
   docTitle:"Takamatsu Live Calendar",
   title:"Takamatsu Live Calendar",
   lede:"A date-by-date guide to live shows at Takamatsu's small live houses, cafés and bars. Find a night out that suits you.",
-  updatedLabel:"Last updated: ", updatedDate:"Nov 8, 2026", countLabel:"Shows listed: ", countSuffix:" shows",
+  updatedLabel:"Last updated: ", updatedDate:"Nov 9, 2026", countLabel:"Shows listed: ", countSuffix:" shows",
   searchPh:"Search by artist or show title", searchAria:"Search by artist or show title",
   chipsLabel:"Filter by venue", listLabel:"Upcoming live shows",
   emptyBig:"No shows match your filters", emptySub:"Try a different search term or venue filter.", clear:"Clear filters",
@@ -487,7 +488,7 @@ en:{
   },
   foot1:"This calendar focuses on shows at small live houses, cafés and bars in Takamatsu (RUFFHOUSE / SO NICE / Nomad / THIRD STONE / SANKO). See each show's source link for full details.",
   foot2:"Lineups, times and prices may change. Please check the official source link for the latest information before you go.",
-  footUpd:"Last updated: Nov 8, 2026 (based on each venue's official announcements)"
+  footUpd:"Last updated: Nov 9, 2026 (based on each venue's official announcements)"
 }};
 
 var state = { venue:"all", q:"", lang:"ja", period:"all"};
