@@ -112,6 +112,7 @@
       .b-nomad{color:var(--nomad);background:var(--nomad-bg)}
       .b-third{color:var(--third);background:var(--third-bg)}
       .b-sanko{color:var(--sanko);background:var(--sanko-bg)}
+.b-other{color:var(--ink2);background:var(--chip)}
       .sub-venue{font-size:12px;color:var(--ink3);font-weight:500}
       .soldout{margin-left:auto;font-size:11.5px;font-weight:900;color:var(--soldout);
         border:1.5px solid var(--soldout);border-radius:5px;padding:2px 8px;letter-spacing:.06em}
@@ -218,7 +219,7 @@
         <h1 id="page-title">高松ライブカレンダー</h1>
         <p class="lede" id="lede">高松市内の小さなライブハウス、カフェ、バーで開かれる公演を、日付順にまとめたカレンダーです。気になる一夜を見つけてください。</p>
         <div class="meta-row">
-          <span><span id="meta-updated-label">最終更新：</span><b id="meta-updated">2026年11月9日</b></span>
+          <span><span id="meta-updated-label">最終更新：</span><b id="meta-updated">2026年11月10日</b></span>
           <span><span id="meta-count-label">掲載公演：</span><b id="total-count">—</b></span>
         </div>
         <div class="lang-toggle" role="group" aria-label="Language / 言語">
@@ -299,7 +300,7 @@
       <footer>
         <p id="foot-1">このカレンダーは、高松市内の小規模なライブハウス・カフェ・バー（RUFFHOUSE／SO NICE／Nomad／THIRD STONE／燦庫）の公演を中心に掲載しています。詳細は各公演の出典リンク先でご確認ください。</p>
         <p id="foot-2">公演内容・時刻・料金は変更になる場合があります。お出かけ前に、出典リンク先の公式情報で最新情報をご確認ください。</p>
-        <p class="upd" id="foot-upd">最終更新：2026年11月9日（掲載情報は各会場の公式発表に基づきます）</p>
+        <p class="upd" id="foot-upd">最終更新：2026年11月10日（掲載情報は各会場の公式発表に基づきます）</p>
       </footer>
     </div>
 
@@ -323,75 +324,140 @@
     </nav>
 
     <script>
-      /* 2026-11-09 時点のスナップショット（各会場の公式情報源より） */
+      /* 2026-11-10 時点のスナップショット（各会場の公式情報源より） */
       var SRC = {
         ruff: "https://www.barruffhouse.com/",
         sonice: "https://ameblo.jp/sonice72/entry-12982746373.html",
         nomad: "https://nomad-music.net/november-2026/",
         sanko: "https://san-ko.site/schedule/"
       };
-      var EVENTS = [
-/* ============ RUFFHOUSE ============ */
-{d:"2026-11-11", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"ハシケン", sub2:"ハシケンLIVE『道はどこまでも』in 高松", perf:"ハシケン（ボーカル、ギター他）", open:"19:00", start:"19:30", price:"前売 ¥3,000／当日 ¥3,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/529578", src:SRC.ruff},
-{d:"2026-11-13", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"THE COCKS", sub2:"Headline GiG “Chaos” Phase.2", perf:"THE COCKS", open:"20:00", start:"20:30", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/526317", src:SRC.ruff},
-{d:"2026-11-14", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"鈴木トオル", sub2:"Love in City 2026 高松／tempo a autunno", perf:"鈴木トオル（Vo.G）", open:"17:30", start:"18:00", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/520468", src:SRC.ruff},
-{d:"2026-11-15", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"杉田 裕（from:JAYWALK）", sub2:"HIROSHI SUGITA SOLO TOUR 2026 Autumn -DRIVE MY CAR-", perf:"杉田 裕（from:JAYWALK）", open:"17:30", start:"18:00", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/522150", src:SRC.ruff},
-{d:"2026-11-17", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"【SOLD OUT】浪花クレオール ＆ 松旭斎天蝶", sub2:"「昭和音曲手品ショー」", perf:"唄と演奏：浪花クレオール（カオリーニョ藤原、山村誠一、井山あきのり）／手品：松旭斎天蝶", open:"19:00", start:"19:30", price:"前売 ¥3,000／当日 ¥3,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/507930", src:SRC.ruff},
-{d:"2026-11-18", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"The Sleeping Boosters", sub2:"伊藤大輔 × 竹中俊二 ＜高松公演＞", perf:"The Sleeping Boosters（伊藤大輔 × 竹中俊二）", open:"19:00", start:"19:30", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/492251", src:SRC.ruff},
-{d:"2026-11-20", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"詩野", sub2:"「HUGしに行くよ♡」ツアー 高松公演", perf:"詩野 w/ 狩野幸子、黒猫のミヤ、北真紗子", open:"19:00", start:"19:30", price:"前売 ¥2,500／当日 ¥3,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/530690", src:SRC.ruff},
-{d:"2026-11-21", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"前田和亮", sub2:"ワンマンライブ『秋風の通り道 ＜香川編＞』", perf:"前田和亮", open:"19:00", start:"19:30", price:"前売 ¥3,500／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/521926", src:SRC.ruff},
-{d:"2026-11-22", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"中川敬（ソウル・フラワー・ユニオン）× リクオ", sub2:"うたのありか2026 〜中川敬還暦／ニューエストモデル結成40周年〜 高松編", perf:"中川敬（ソウル・フラワー・ユニオン）× リクオ", open:"17:00", start:"17:30", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/515967", src:SRC.ruff},
-{d:"2026-11-23", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"浜端ヨウヘイ", sub2:"LIVE TOUR 2026 “HERE AND THERE” in 高松", perf:"浜端ヨウヘイ", open:"17:30", start:"18:00", price:"前売 ¥4,500／当日 ¥5,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/521121", src:SRC.ruff},
-{d:"2026-11-24", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"さっことアモーレ", sub2:"アルバム「さっことアモーレ - Live Recording」リリースツアー ＜高松公演＞", perf:"さっことアモーレ／OA：カミカワミレイ feat.納田牧人", open:"19:00", start:"19:30", price:"前売 ¥3,500／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/523904", src:SRC.ruff},
-{d:"2026-11-25", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"エキサイト中條", sub2:"マンスリーエキサイトタイムズ！11月号", perf:"エキサイト中條", open:"19:30", start:"20:00", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/535517", src:SRC.ruff},
-{d:"2026-11-27", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"和-IZUMI-（橘いずみ）", sub2:"冬のアコギジャカジャカ旅 高松へ", perf:"和-IZUMI-（橘いずみ）／OA：ボヌール、iN BODY", open:"19:00", start:"19:30", price:"前売 ¥4,500／当日 ¥5,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/524188", src:SRC.ruff},
-{d:"2026-11-28", v:"ruff", sub:"Music Bar RUFFHOUSE", title:"レコード鑑賞会 vol.70", sub2:"噂のレコード鑑賞会 vol.70", perf:"昭和歌謡からロック、ポップス、ジャズまで、レコードを聴く鑑賞会（おひとり1曲リクエスト可）", open:"18:00", start:"18:15", price:"入場料 ¥1,000（飲物代別途・食べ物のみ持込可）", note:"会場は1階のBARスペース。ご視聴だけの方は飲物代＋チャージ ¥300。", src:SRC.ruff},
-{d:"2026-12-05", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"染西まつり", sub2:"『三色スペシャル歌弁当〜それ絶対ウマいやつ〜@高松編』", perf:"染谷俊、西広ショータ、ぶらりふたり放浪記", open:"15:00", start:"15:30", price:"前売 ¥5,000／当日 ¥5,500（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/534261", src:SRC.ruff},
-{d:"2026-12-06", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"聞間拓 × 山口こうじ", sub2:"ツーマンライブ〜熱いだけじゃない夜に", perf:"聞間拓、山口こうじ", open:"17:30", start:"18:00", price:"前売 ¥3,000／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/530681", src:SRC.ruff},
-{d:"2026-12-13", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"君の心に届く歌", perf:"市川セカイ、前田和亮、KAZU OF THE LEGEND", open:"18:00", start:"18:30", price:"前売 ¥3,500／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/534356", src:SRC.ruff},
-{d:"2026-12-19", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"ボヌール", sub2:"クリスマスの夜に、幸せの花束を", perf:"ボヌール", open:"18:30", start:"19:00", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/537145", src:SRC.ruff},
-{d:"2026-12-20", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"Nakamura Hak", sub2:"「Plugless（Out-store）Live Tour – 異端」", perf:"Nakamura Hak", open:"17:30", start:"18:00", price:"", note:"1st E.P.「白は夢」をご購入の方は無料で入場できるツアーです。", src:SRC.ruff},
-{d:"2026-12-21", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"Jazz Night（Vo.三木智子、Gt.愛川聡）", sub2:"Jazz Night @ RUFFHOUSE", perf:"Vo.三木智子、Gt.愛川聡", open:"19:00", start:"19:30", price:"前売 ¥3,500／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/529095", src:SRC.ruff},
-{d:"2026-12-26", v:"ruff", sub:"Music Bar RUFFHOUSE", title:"ナウなヤングの流行歌", sub2:"〜昭和が終わる頃、コミックバンドやってたボクたちの好きな歌〜（DJイベント）", perf:"クロオとフジタマン／リクエスト読み上げ：中條加菜（西日本放送アナウンサー）", open:"18:30", start:"19:00", price:"¥500（1オーダー制）", note:"昭和歌謡ときどき洋楽をレコードで。約500曲のリストからリクエストできます。", src:SRC.ruff},
-{d:"2027-01-19", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"山羊座な男たち", sub2:"〜Three Singer-Songwriters under the Capricorn〜", perf:"加藤ヒデキ、嶋田エイジ、エキサイト中條", open:"19:30", start:"20:00", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/529090", src:SRC.ruff},
-{d:"2027-01-23", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"はたなか圭一", sub2:"OVERPLAY Kagawa Final -Solo Style-", perf:"はたなか圭一", open:"14:00", start:"14:30", price:"前売 ¥3,000／当日 ¥4,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/528388", src:SRC.ruff},
-{d:"2027-01-31", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"Pink Panther☆", sub2:"ワンマンライブ「Dialogue」", perf:"Pink Panther☆（鍵盤ハーモニカ、ピアノ、カホン）", open:"14:00", start:"14:30", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/533897", src:SRC.ruff},
-{d:"2027-02-07", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"Yesterday & Today", sub2:"〜昨日の音を今日の唄に〜", perf:"嶋田エイジ、Fullcount！、歳時記", open:"17:30", start:"18:00", price:"前売 ¥1,500／当日 ¥2,000（ドリンク代別途 ¥600）", ticket:"https://tiget.net/events/534795", src:SRC.ruff},
-{d:"2027-02-11", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"とびだせ！シンガーソングライター VOL.8", perf:"井上美喜、加藤ヒデキ、嶋田エイジ／ゲスト：佐藤亙", open:"17:00", start:"17:30", price:"前売 ¥2,500／当日 ¥3,000（ドリンク代別途 ¥600）", src:SRC.ruff},
-{d:"2027-04-07", v:"ruff", sub:"Music&Live RUFFHOUSE", title:"FIRST STEP", sub2:"〜RUFFHOUSEのブッキングライブ〜\u3010出演者募集\u3011", perf:"出演者募集中（申込締切：開催10日前）", open:"19:00", start:"19:30", price:"前売 ¥1,500／当日 ¥2,000（+1ドリンク ¥600）", ticket:"https://ruffhouse.bitfan.id/schedules/130148?fbclid=IwZXh0bgNhZW0CMTAAcGRvZgVzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEfJrB968y2tjph281UgCDua654AprvjtzdZCNBPt-VPOU2TsLWQfyEUQq8GKA_aem_uP9BMtsbdaNJVdvEJUOC-A", note:"定期開催のブッキングライブ。出演希望の方は公式サイトからお問い合わせください。", src:SRC.ruff},
-
-/* ============ SO NICE ============ */
-{d:"2026-11-10", v:"sonice", title:"唐口一之LIVE＆SESSION", perf:"唐口一之（tp）、鶴岡雅子（pf）、浜野光男（bs）", open:"", start:"19:30", price:"ミュージックチャージ ¥3,000", src:SRC.sonice},
-{d:"2026-11-13", v:"sonice", title:"関根彰", sub2:"New album「Weaving Voices」リリースツアー", perf:"関根彰（gt）", open:"", start:"19:30", price:"ミュージックチャージ ¥3,800", src:SRC.sonice},
-{d:"2026-11-21", v:"sonice", title:"情家みえLIVE", perf:"情家みえ（vo）、田窪寛之（pf）、池尻洋史（ba）、小松伸之（ds）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,500", src:SRC.sonice},
-{d:"2026-11-24", v:"sonice", title:"清水夏生＆松下福寿 LIVE TOUR 2026", perf:"清水夏生（Tapdance）、松下福寿（pf）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,000", src:SRC.sonice},
-{d:"2026-11-27", v:"sonice", title:"森村献＆佐野聡 お遍路二人旅2026", perf:"森村献（pf）、佐野聡（Tb）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,000（当日 ¥4,500）", src:SRC.sonice},
-{d:"2026-11-28", v:"sonice", title:"Noodle Crazy Monkey ➕", perf:"藤原清登（bs）、河西那都（vo）、廣田健一郎（ds）ほか", open:"", start:"19:30", price:"ミュージックチャージ ¥4,000", src:SRC.sonice},
-{d:"2026-11-30", v:"sonice", title:"佐藤達哉＋早川由紀子 ジャズライブ＠高松", perf:"佐藤達哉（ts）、早川由紀子（pf）、廣嶋顕治（bs）、生田知保（drums）", open:"", start:"19:30", price:"ミュージックチャージ ¥4,500", src:SRC.sonice},
-
-/* ============ Nomad ============ */
-{d:"2026-11-14", v:"nomad", title:"MANHATTANZ Live at 高松 Nomad", perf:"Sax Kazuki Kitamori、Guitar Michio Takeuchi、Bass Ryunosuke Makino、Keyboard Shin Tsujimoto、Drums Shota Yajima", open:"18:30", start:"19:00", price:"チャージ ¥3,000（別途オーダー）", src:SRC.nomad},
-{d:"2026-11-21", v:"nomad", title:"Nomad Jazz Session（スペシャルセッション）", perf:"Pf. 西川崇代・大軒聖子、Gt. 小笠原岳海、Bs. 岩間学、Ds. 木所誠、Vo. Rie NeCo・Yuma・Miwako", open:"", start:"20:00", price:"チャージ ¥2,000＋税／学生 ¥1,500＋税", note:"20:00〜23:00。毎月第3土曜のセッションDay、この回はスペシャルセッション。", src:SRC.nomad},
-{d:"2026-11-27", v:"nomad", title:"HAYATO SATO & FRIENDS Vol.3", perf:"Hayato Sato ほか（メンバーは決まり次第お知らせ）", open:"20:00", start:"20:30", price:"ミュージックチャージ ¥2,200（税込）＋1ドリンク", note:"1st 20:30／2nd 21:30。", src:SRC.nomad},
-{d:"2026-11-28", v:"nomad", title:"CHAKA ライブ with 瀬部妙子", perf:"CHAKA、Pf. 瀬部妙子", open:"15:30", start:"16:00", price:"チャージ ¥3,000（別途1ドリンク）", note:"お問い合わせは主催 shikoku.live@gmail.com まで。", src:SRC.nomad},
-
-/* ============ THIRD STONE ============ */
-{d:"2026-11-14", v:"third", title:"武内正陽 Solo Tour 2026", sub2:"〜山陰〜山陽〜四国〜北部九州", perf:"武内正陽／OA：津村有香とQuis Guitars、デヴィッド近藤、Mina Sako", open:"19:00", start:"19:30", price:"入場料 ¥2,500（ドリンク別）", src:"https://thirdstone.info/event/%e6%ad%a6%e5%86%85%e6%ad%a3%e9%99%bd-solo-tour-2026-%e5%b1%b1%e9%99%b0%e5%b1%b1%e9%99%bd%e5%9b%9b%e5%9b%bd%e5%8c%97%e9%83%a8%e4%b9%9d%e5%b7%9e/"},
-{d:"2026-11-15", v:"third", title:"hozzy＆田中ユウイチ弾き語りツアー2026-2027", sub2:"“半月酒場 〜 ÷ THE MOON 〜”", perf:"hozzy、田中ユウイチ", open:"16:30", start:"17:00", price:"前売 ¥4,000／当日 ¥4,500（ドリンク別）", src:"https://thirdstone.info/event/hozzy%e7%94%b0%e4%b8%ad%e3%83%a6%e3%82%a6%e3%82%a4%e3%83%81%e5%bc%be%e3%81%8d%e8%aa%9e%e3%82%8a%e3%83%84%e3%82%a2%e3%83%bc2026-2027%e5%8d%8a%e6%9c%88%e9%85%92%e5%a0%b4-%e3%80%9c-%c3%b7-the/"},
-{d:"2026-11-22", v:"third", title:"ワタナベマモル 夢の晩秋ロックンロール2026", perf:"ワタナベマモル／OA：cabaret、THE COCKS", open:"19:00", start:"19:30", price:"チャージ ¥2,500（ドリンク別）", src:"https://thirdstone.info/event/%e3%83%af%e3%82%bf%e3%83%8a%e3%83%99%e3%83%9e%e3%83%a2%e3%83%ab-%e5%a4%a2%e3%81%ae%e6%99%a9%e7%a7%8b%e3%83%ad%e3%83%83%e3%82%af%e3%83%b3%e3%83%ad%e3%83%bc%e3%83%ab2026/"},
-
-/* ============ 燦庫 -SANKO- ============ */
-{d:"2026-11-11", v:"sanko", title:"Tim Holehouse JAPAN TOUR", perf:"Tim Holehouse、Yuki Teratani", open:"19:30", start:"20:00", price:"FREE (+2DRINK ORDER)", src:"https://san-ko.site/events/tim-holehouse-japan-tour/"},
-{d:"2026-11-13", v:"sanko", title:"んねじれる presents", perf:"", open:"", start:"", price:"", note:"詳細は出典リンク先でご確認ください。", src:"https://san-ko.site/events/%e3%82%93%e3%81%ad%e3%81%98%e3%82%8c%e3%82%8b-presents/"},
-{d:"2026-11-14", v:"sanko", title:"LATIN NIGHT", perf:"", open:"", start:"", price:"", note:"詳細は出典リンク先でご確認ください。", src:"https://san-ko.site/events/latin-night/"},
-{d:"2026-11-15", v:"sanko", title:"Interesting Results & 成レノ果テ presents “RESULTS 成果 推介會”", perf:"LOVELOVE、殺して38、武鑓隼太、Douglas、ウパルパengei、NOSNIKA、5cm assholes、GIVE ME BACK!、後藤さとみ、The Naked Launches、lopess、Interesting Results ほか", open:"13:00", start:"13:00", price:"¥2,000／¥2,500（+1ドリンクオーダー）", src:"https://san-ko.site/events/interesting-results-%e6%88%90%e3%83%ac%e3%83%8e%e6%9e%9c%e3%83%86-presents-results-%e6%88%90%e6%9e%9c-%e6%8e%a8%e4%bb%8b%e6%9c%83/"},
-{d:"2026-11-16", v:"sanko", title:"No Sneer presents “熱血大集合祭”", sub2:"25 U SING “SMASH!!GROOM!!!!! TOUR” TOONICE & 燦庫-SANKO- 2STAGE", perf:"No Sneer、25 U SING、YeRrMiI、nearmiss、Bright Road、ノーハイプ、Human DISSECTION 〆 potatosalad club、MONMON", open:"17:30", start:"18:00", price:"¥1,000／¥1,500（+1ドリンクオーダー）", src:"https://san-ko.site/events/no-sneer-presents-%e7%86%b1%e8%a1%80%e5%a4%a7%e9%9b%86%e5%90%88%e7%a5%ad-25-u-sing-smashgroom-tour-toonice-%e7%87%a6%e5%ba%ab-sanko-2stage/"},
-{d:"2026-11-17", v:"sanko", title:"LATIN NIGHT", perf:"", open:"", start:"", price:"", note:"詳細は出典リンク先でご確認ください。", src:"https://san-ko.site/events/latin-night-2/"},
-{d:"2026-11-18", v:"sanko", title:"武内正陽 Solo Tour 2026", perf:"武内正陽、スタンドアップ法話 釈慈浪（眞行寺）、横倉英城、CABARET", open:"18:00", start:"18:30", price:"¥2,500／¥3,000（+1ドリンクオーダー）", src:"https://san-ko.site/events/event-2/"},
-{d:"2026-11-20", v:"sanko", title:"Risa Takeda solo tour 2026", perf:"武田理沙、Deadpudding、_shu、lopess", open:"19:00", start:"19:30", price:"¥2,000／¥2,500（+1ドリンクオーダー）", src:"https://san-ko.site/events/event-3/"},
-{d:"2026-11-21", v:"sanko", title:"「と或る視点 2」", perf:"Mio Takeyama、空耳アユミ、ymhr、セガ・ボッテガ、_shu、Masami Takashima／出店：きゅう、TWIN SHIPS RECORDS", open:"18:00", start:"18:30", price:"¥2,500／¥3,000（+1ドリンクオーダー）", src:"https://san-ko.site/events/event-4/"},
-{d:"2026-11-22", v:"sanko", title:"工藤祐次郎 単独公演", perf:"工藤祐次郎", open:"16:00", start:"16:30", price:"¥4,000／¥4,500（+1ドリンクオーダー）", src:"https://san-ko.site/events/event-5/"},
+      var RAW_EVENTS = [
+{"date": "2026-11-10", "venue": "jazz&bar SO NICE", "title": "唐口一之LIVE＆SESSION", "open": null, "start": "19:30", "price": "MC ¥3,000", "ticket": null, "source": "https://ameblo.jp/sonice72/entry-12982746373.html", "desc": "唐口一之/tp、鶴岡雅子/pf、浜野光男/bs", "performers": null},
+{"date": "2026-11-11", "venue": "Music&Live RUFFHOUSE", "title": "ハシケン", "open": "19:00", "start": "19:30", "price": "前売￥3,000-／当日￥3,500- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/529578", "source": null, "desc": "心に響く歌声とギター。 ハシケンの音楽が、高松にやってきます！ シンガーソングライター・ハシケンが贈る、一夜限りのライブ。 歌とギターが紡ぎ出す音楽の世界へ。 どこまでも続く道の先に、どんな景色が待っているのか。 ぜひ会場で、生の歌声と演奏をお楽しみください！ 2026年11月11日（水） 出　演：ハシケン（ボーカル、ギター他） 公　演：ハシケンLIVE『道はどこまでも』in 高松 時　間", "performers": "ハシケン（ボーカル、ギター他）"},
+{"date": "2026-11-11", "venue": "LIVE HOUSE 燦庫 -SANKO-", "title": "Tim Holehouse JAPAN TOUR", "open": "19:30", "start": "20:00", "price": "FREE (+2DRINK ORDER)", "ticket": null, "source": "https://san-ko.site/events/tim-holehouse-japan-tour/", "desc": "【ACT】  Tim Holehouse /Yuki Teratani  【OPEN / START】  19:30 / 20:00  【CHARGE】  FREE (+2DRINK ORDER)", "performers": null},
+{"date": "2026-11-13", "venue": "LIVE HOUSE 燦庫 -SANKO-", "title": "んねじれる presents", "open": null, "start": null, "price": null, "ticket": null, "source": "https://san-ko.site/events/%e3%82%93%e3%81%ad%e3%81%98%e3%82%8c%e3%82%8b-presents/", "desc": "【ACT】  TBA  【OPEN / START】  TBA / TBA  【CHARGE】  TBAyen / TBAyen (+1DRINK ORDER)", "performers": null},
+{"date": "2026-11-13", "venue": "jazz&bar SO NICE", "title": "関根彰", "open": null, "start": "19:30", "price": "MC ¥3,800", "ticket": null, "source": "https://ameblo.jp/sonice72/entry-12982746373.html", "desc": "New album 「Weaving Voices」リリースツアー", "performers": null},
+{"date": "2026-11-13", "venue": "Music&Live RUFFHOUSE", "title": "THE COCKS～Headline GiG \"Chaos\" Phase.2", "open": "20:00", "start": "20:30", "price": "前売￥1,500-／当日￥2,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/526317", "source": null, "desc": "物事の真偽など、いともたやすく操作され、すりかえられ、そこにゾンビ映画の如く群がる烏合の衆… 世界はカオス(混沌)の渦の中へ。 まさにアルマゲドンタイム。 さぁ、やりきれない今だからこそ、飲み込まれる前にハートを転がせ！！ It’s All Up To You. 2026年11月13日（金） 出　演：THE COCKS 公演名：Headline GiG \"Chaos\" Phase.2 時　間：開", "performers": "THE COCKS"},
+{"date": "2026-11-14", "venue": "LIVE HOUSE 燦庫 -SANKO-", "title": "LATIN NIGHT", "open": null, "start": null, "price": null, "ticket": null, "source": "https://san-ko.site/events/latin-night/", "desc": "【ACT】  TBA  【OPEN / START】  TBA / TBA  【CHARGE】  TBAyen / TBAyen (+1DRINK ORDER)", "performers": null},
+{"date": "2026-11-14", "venue": "Music&Live RUFFHOUSE", "title": "鈴木トオル", "open": "17:30", "start": "18:00", "price": "前売￥5,000-／当日￥5,500- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/520468", "source": null, "desc": "あの歌声に、もう一度会いに行こう。 「シャイニン・オン～君が哀しい～」で 多くの人の心を掴んだ、鈴木トオル。 時を重ねても変わらない歌声と、 人生を重ねたからこそ響く「愛」の歌。 全国を巡り続ける「Love in City」が、 秋の高松にやってくる。 Love in City 2026 高松 tempo a autunno 鈴木トオル 11月14日、RUFFHOUSE。 歌声に包まれる、特別な秋", "performers": "鈴木トオル（Vo.G）"},
+{"date": "2026-11-14", "venue": "Nomad", "title": "MANHATTANZ Live at 高松 Nomad", "open": "18:30", "start": "19:00", "price": "Charge 3,000yen（別途オーダー）", "ticket": null, "source": "https://nomad-music.net/november-2026/", "desc": "Sax Kazuki Kitamori　Guitar Michio Takeuchi　Bass Ryunosuke Makino　Keyboard Shin Tsujimoto　Drums Shota Yajima MANHATTANZによるライブです", "performers": null},
+{"date": "2026-11-14", "venue": "THIRD STONE", "title": "武内正陽 Solo Tour 2026 ~山陰~山陽~四国~北部九州", "open": "19:00", "start": "19:30", "price": "入場料: ¥2,500- (ドリンク別)", "ticket": null, "source": "https://thirdstone.info/event/%e6%ad%a6%e5%86%85%e6%ad%a3%e9%99%bd-solo-tour-2026-%e5%b1%b1%e9%99%b0%e5%b1%b1%e9%99%bd%e5%9b%9b%e5%9b%bd%e5%8c%97%e9%83%a8%e4%b9%9d%e5%b7%9e/", "desc": "武内正陽 Solo Tour 2026 ~山陰~山陽~四国~北部九州 2026年11月14日(土) OPEN 19:00 START 19:30 入場料: ¥2,500- (ドリンク別) OA: 津村有香とQuis Guitars, デヴィッド近藤, Mina Sako ※当日は店内禁煙とさせていただきます。 （外に喫煙所あり） お問い合わせ 高松THIRD STONE 香川県高松市東山崎町387", "performers": null},
+{"date": "2026-11-15", "venue": "LIVE HOUSE 燦庫 -SANKO-", "title": "Interesting Results & 成レノ果テ presents “RESULTS 成果 推介會”", "open": "13:00", "start": "13:00", "price": "2000yen / 2500yen (+1DRINK ORDER)", "ticket": null, "source": "https://san-ko.site/events/interesting-results-%e6%88%90%e3%83%ac%e3%83%8e%e6%9e%9c%e3%83%86-presents-results-%e6%88%90%e6%9e%9c-%e6%8e%a8%e4%bb%8b%e6%9c%83/", "desc": "【ACT】  LOVELOVE 殺して38 武鑓隼太 Douglas ウパルパengei NOSNIKA 5cm assholes GIVE ME BACK! 後藤さとみ The Naked Launches lopess Interesting Results 似顔絵屋てんしんくん BGM OKARU BGM syda  【OPEN / START】  13:00 /", "performers": null},
+{"date": "2026-11-15", "venue": "THIRD STONE", "title": "hozzy&田中ユウイチ弾き語りツアー2026 - 2027”半月酒場 〜 ÷ THE MOON 〜”", "open": "16:30", "start": "17:00", "price": "前売 ¥4,000- (Drink別) ／ 当日 ¥4,500- (Drink別)", "ticket": null, "source": "https://thirdstone.info/event/hozzy%e7%94%b0%e4%b8%ad%e3%83%a6%e3%82%a6%e3%82%a4%e3%83%81%e5%bc%be%e3%81%8d%e8%aa%9e%e3%82%8a%e3%83%84%e3%82%a2%e3%83%bc2026-2027%e5%8d%8a%e6%9c%88%e9%85%92%e5%a0%b4-%e3%80%9c-%c3%b7-the/", "desc": "hozzy&田中ユウイチ弾き語りツアー2026 – 2027”半月酒場 〜 ÷ THE MOON 〜” 2026年11月15日(日) OPEN 16:30 START 17:00 前売 ¥4,000- (Drink別) 当日 ¥4,500- (Drink別) ※当日は店内禁煙とさせていただきます。（外に喫煙所あり） お問い合わせ 高松THIRD STONE 香川県高松市東山崎町387-5 TEL", "performers": null},
+{"date": "2026-11-15", "venue": "Music&Live RUFFHOUSE", "title": "杉田 裕（from:JAYWALK）", "open": "17:30", "start": "18:00", "price": "前売￥5,000-／当日￥5,500- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/522150", "source": null, "desc": "人生も、音楽も、 まだまだ走り続ける。 JAYWALKの杉田 裕が、 ギターと歌を携えて高松へ。 走ってきた時間があるからこそ歌える歌。 積み重ねてきた音楽だからこそ届く音。 -DRIVE MY CAR- 杉田 裕と過ごす、 秋のRUFFHOUSE。 2026年11月15日（日） 出　演：杉田 裕（from:JAYWALK） 公演名：HIROSHI SUGITA SOLO TOUR 2026 A", "performers": "杉田 裕（from:JAYWALK）"},
+{"date": "2026-11-16", "venue": "LIVE HOUSE 燦庫 -SANKO-", "title": "“No Sneer presents “熱血大集合祭” 25 U SING “SMASH!!GROOM!!!!! TOUR” TOONICE & 燦庫-SANKO- 2STAGE”", "open": "17:30", "start": "18:00", "price": "1000yen / 1500yen (+1DRINK ORDER)", "ticket": null, "source": "https://san-ko.site/events/no-sneer-presents-%e7%86%b1%e8%a1%80%e5%a4%a7%e9%9b%86%e5%90%88%e7%a5%ad-25-u-sing-smashgroom-tour-toonice-%e7%87%a6%e5%ba%ab-sanko-2stage/", "desc": "【ACT】  No Sneer 25 U SING YeRrMiI nearmiss Bright Road ノーハイプ Human DISSECTION 〆 potatosalad club MONMON  【OPEN / START】  17:30 / 18:00  【CHARGE】  1000yen / 1500yen (+1DRINK ORDER)", "performers": null},
+{"date": "2026-11-17", "venue": "LIVE HOUSE 燦庫 -SANKO-", "title": "LATIN NIGHT", "open": null, "start": null, "price": null, "ticket": null, "source": "https://san-ko.site/events/latin-night-2/", "desc": "【ACT】  TBA  【OPEN / START】  TBA / TBA  【CHARGE】  TBAyen / TBAyen (+1DRINK ORDER)", "performers": null},
+{"date": "2026-11-17", "venue": "Music&Live RUFFHOUSE", "title": "【SOLD OUT】浪花クレオール ＆ 松旭斎天蝶", "open": "19:00", "start": "19:30", "price": "前売￥3,000-／当日￥3,500- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/507930", "source": null, "desc": "歌って、笑って、だまされる。 昭和の夜が、RUFFHOUSEにやってくる。 浪花クレオールが奏でる、 懐かしくも粋な昭和音曲。 そこに現れるのは、 手品師・松旭斎天蝶。 音楽と手品が織りなす、 ちょっと不思議で、ちょっと可笑しい一夜。 「昭和音曲手品ショー」 11月17日、RUFFHOUSE。 さあ、あなたも昭和の夜へ。 2026年11月17日（火） 出　演：唄と演奏:浪花クレオール（カオリーニ", "performers": "唄と演奏:浪花クレオール（カオリーニョ藤原、山村誠一、井山あきのり）、手品: 松旭斎天蝶"},
+{"date": "2026-11-18", "venue": "LIVE HOUSE 燦庫 -SANKO-", "title": "武内正陽 Solo Tour 2026", "open": "18:00", "start": "18:30", "price": "2500yen / 3000yen (+1DRINK ORDER)", "ticket": null, "source": "https://san-ko.site/events/event-2/", "desc": "【ACT】  武内正陽 スタンドアップ法話 釈慈浪(眞行寺) 横倉英城 CABARET  【OPEN / START】  18:00 / 18:30  【CHARGE】  2500yen / 3000yen (+1DRINK ORDER)", "performers": null},
+{"date": "2026-11-18", "venue": "Music&Live RUFFHOUSE", "title": "The Sleeping Boosters（伊藤大輔 × 竹中俊二）", "open": "19:00", "start": "19:30", "price": "前売￥5,000-／当日￥5,500- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/492251", "source": null, "desc": "息をのむボーカルとギターの掛け合い。 The Sleeping Boosters（伊藤大輔 × 竹中俊二）＜高松公演＞ 卓越した歌唱力と柔軟なセンスでジャズ、ポップス、アカペラなど多方面で異彩を放つボーカリスト、伊藤大輔。そして、繊細かつダイナミックなギターワークで数々の名手を支え、ジャンルを超えて独自の存在感を放つギタリスト、竹中俊二。この実力派2人が結成したアコースティック・ユニット「The", "performers": "The Sleeping Boosters（伊藤大輔 × 竹中俊二）"},
+{"date": "2026-11-20", "venue": "LIVE HOUSE 燦庫 -SANKO-", "title": "Risa Takeda solo tour 2026", "open": "19:00", "start": "19:30", "price": "2000yen / 2500yen (+1DRINK ORDER)", "ticket": null, "source": "https://san-ko.site/events/event-3/", "desc": "【ACT】  武田理沙 /Deadpudding /_shu /lopess  【OPEN / START】  19:00 / 19:30  【CHARGE】  2000yen / 2500yen (+1DRINK ORDER)", "performers": null},
+{"date": "2026-11-20", "venue": "Music&Live RUFFHOUSE", "title": "詩野", "open": "19:00", "start": "19:30", "price": "前売￥2,500-／当日￥3,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/530690", "source": null, "desc": "歌で、ぎゅっと。 心に、HUGを。♡ 詩野が歌を届けに、高松へ。 そして、狩野幸子、黒猫のミヤ、北真紗子。 それぞれの歌声が集まって、 心をそっと包み込むような一夜をつくります。 笑ったり、泣いたり、 ふと誰かを思い出したり。 音楽って、 そんなふうに心を抱きしめてくれるもの。 詩野「HUGしに行くよ♡」ツアー 高松公演 11月20日、RUFFHOUSEで。 あなたの心に、HUGを届けに行きます。", "performers": "詩野 w/狩野幸子、黒猫のミヤ、北真紗子"},
+{"date": "2026-11-21", "venue": "LIVE HOUSE 燦庫 -SANKO-", "title": "「と或る視点 2 」", "open": "18:00", "start": "18:30", "price": "2500yen / 3000yen (+1DRINK ORDER)", "ticket": null, "source": "https://san-ko.site/events/event-4/", "desc": "【ACT】  Mio Takeyama 空耳 アユミ ymhr セガ・ボッテガ _shu Masami Takashima 出店 きゅう TWIN SHIPS RECORDS  【OPEN / START】  18:00 / 18:30  【CHARGE】  2500yen / 3000yen (+1DRINK ORDER)", "performers": null},
+{"date": "2026-11-21", "venue": "Music&Live RUFFHOUSE", "title": "前田和亮", "open": "19:00", "start": "19:30", "price": "前売￥3,500-／当日￥4,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/521926", "source": null, "desc": "秋深まる香川の夜、前田和亮の温かく繊細な歌声とアコースティックなサウンドがライブ会場を包み込みます。全国を旅する彼が紡ぐ、心を揺さぶるメロディと物語を、手の届くような至近距離のライブ空間でお楽しみください。 地元の弾き語りファンはもちろん、遠方からのご来場も心よりお待ちしております。会場にお越しになれない方向けに高音質な配信チケットもご用意しました。 2026年11月21日（土） 出　演：前田", "performers": "前田和亮"},
+{"date": "2026-11-21", "venue": "jazz&bar SO NICE", "title": "情家みえLIVE", "open": null, "start": "19:30", "price": "MC ¥4,500", "ticket": null, "source": "https://ameblo.jp/sonice72/entry-12982746373.html", "desc": "情家みえ/vo、田窪寛之/pf、池尻洋史/ba、小松伸之/ds", "performers": null},
+{"date": "2026-11-21", "venue": "Nomad", "title": "Nomad Jazz Session（スペシャルセッション）", "open": null, "start": "20:00", "price": "Charge 2,000yen +tax／学生 1,500yen +tax", "ticket": null, "source": "https://nomad-music.net/november-2026/", "desc": "Pf. 西川崇代・大軒聖子　Gt. 小笠原岳海　Bs. 岩間学　Ds. 木所誠　Vo. Rie NeCo・Yuma・Miwako 毎月第３土曜はセッションDay！この回はスペシャルセッションです。奮ってご参加ください！", "performers": null},
+{"date": "2026-11-22", "venue": "LIVE HOUSE 燦庫 -SANKO-", "title": "工藤祐次郎 単独公演", "open": "16:00", "start": "16:30", "price": "4000yen / 4500yen (+1DRINK ORDER)", "ticket": null, "source": "https://san-ko.site/events/event-5/", "desc": "【ACT】  工藤祐次郎 TICKET: livepocket.jp/e/4lg0v  【OPEN / START】  16:00 / 16:30  【CHARGE】  4000yen / 4500yen (+1DRINK ORDER)", "performers": null},
+{"date": "2026-11-22", "venue": "Music&Live RUFFHOUSE", "title": "中川敬（ソウル・フラワー・ユニオン）×リクオ", "open": "17:00", "start": "17:30", "price": "前売￥5,000-／当日￥5,500- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/515967", "source": null, "desc": "歌には、帰る場所がある。 そして、まだ見ぬ場所へも行ける。 中川敬（ソウル・フラワー・ユニオン）×リクオ。 時代を駆け抜けてきた二人が、 歌とピアノ、言葉とメロディーを携えて、 また高松へ。 中川敬・還暦。 ニューエストモデル結成40周年。 節目の年に届けられる、 「うたのありか」。 うたのありか2026 〜中川敬還暦／ニューエストモデル結成40周年〜 高松編 11月22日、RUFFHOUSEで。", "performers": "中川敬（ソウル・フラワー・ユニオン）×リクオ"},
+{"date": "2026-11-22", "venue": "THIRD STONE", "title": "ワタナベマモル 夢の晩秋ロックンロール2026", "open": "19:00", "start": "19:30", "price": "Charge: ¥2,500- (Drink別)", "ticket": null, "source": "https://thirdstone.info/event/%e3%83%af%e3%82%bf%e3%83%8a%e3%83%99%e3%83%9e%e3%83%a2%e3%83%ab-%e5%a4%a2%e3%81%ae%e6%99%a9%e7%a7%8b%e3%83%ad%e3%83%83%e3%82%af%e3%83%b3%e3%83%ad%e3%83%bc%e3%83%ab2026/", "desc": "ワタナベマモル 夢の晩秋ロックンロール2026 2026年11月22日 (日) OPEN 19:00 START 19:30 Charge: ¥2,500- (Drink別) OA: cabaret, THE COCKS ※当日は店内禁煙とさせていただきます。 （外に喫煙所あり） お問い合わせ 高松THIRD STONE 香川県高松市東山崎町387-5 TEL 087-847-5891 ＜ワタナベ", "performers": null},
+{"date": "2026-11-23", "venue": "Music&Live RUFFHOUSE", "title": "浜端ヨウヘイ", "open": "17:30", "start": "18:00", "price": "前売￥4,500-／当日￥5,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/521121/", "source": null, "desc": "包み込むような圧倒的な歌声と極上のアコースティックサウンドが、RUFFHOUSEの濃密な空間に響き渡る！ 浜端ヨウヘイ全国ツアー「LIVE TOUR 2026 \"HERE AND THERE\"」高松公演の開催が決定いたしました。息づかいまで届く圧倒的な距離感で、心揺さぶるライブ体験をお届けします。 祝日の夜、極上の音楽とお酒とともに心満たされる贅沢な時間をお過ごしください。 2026年11月", "performers": "浜端ヨウヘイ"},
+{"date": "2026-11-24", "venue": "Music&Live RUFFHOUSE", "title": "さっことアモーレ OA：カミカワミレイ feat.納田牧人", "open": "19:00", "start": "19:30", "price": "前売￥3,500-／当日￥4,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/523904", "source": null, "desc": "言葉は、生々しく。 音は、心地よく。 そして、グルーヴは深く。 齊藤さっこの歌と言葉と、 夜のアモーレが生み出す世界。 その一夜を音源に刻んだ 「さっことアモーレ - Live Recording」。 今回はベースレスのアコースティックトリオで、 いつもとはまた違う表情を見せる。 11月24日、高松RUFFHOUSE。 心地よく揺れて、 心に刺さる夜。 2026年11月24日（火） 出　演：さっ", "performers": "さっことアモーレ OA：カミカワミレイ feat.納田牧人"},
+{"date": "2026-11-24", "venue": "jazz&bar SO NICE", "title": "清水夏生&松下福寿", "open": null, "start": "19:30", "price": "MC ¥4,000", "ticket": null, "source": "https://ameblo.jp/sonice72/entry-12982746373.html", "desc": "LIVE TOUR 2026 清水夏生/Tapdance、松下福寿/pf", "performers": null},
+{"date": "2026-11-25", "venue": "Music&Live RUFFHOUSE", "title": "エキサイト中條", "open": "19:30", "start": "20:00", "price": "前売￥1,500-／当日￥2,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/535517", "source": null, "desc": "2026年の『マンスリーエキサイトタイムズ』は、皆さまの声で創り上げる60分ライブ！ ご予約時にいただいたリクエスト曲をもとに、その日だけのスペシャルなセットリストをお届けします。 みんなでプロデュースする、究極のエキサイトタイムズ。いよいよ開催！ 2026年11月25日（水） 出　演：エキサイト中條 公演名：マンスリーエキサイトタイムズ！11月号 時　間：開場19:30／開演20:00 料　金", "performers": "エキサイト中條"},
+{"date": "2026-11-27", "venue": "Music&Live RUFFHOUSE", "title": "和-IZUMI-（橘いずみ） OA：ボヌール、iN BODY", "open": "19:00", "start": "19:30", "price": "前売￥4,500-／当日￥5,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/524188", "source": null, "desc": "冬の夜に、アコギをジャカジャカ。 歌を鳴らしに、高松へ。 鋭く、強く、そしてどこか温かい。 人間の心をまっすぐに描いてきた歌声。 和-IZUMI-（橘いずみ）が、 アコースティックギターを携えて高松へやってくる。 「冬のアコギジャカジャカ旅 高松へ」 ボヌール、iN BODYを迎え、 冬の夜を音楽で熱くする一夜。 11月27日、RUFFHOUSE。 アコギと歌があれば、冬だって熱い。 2026年", "performers": "和-IZUMI-（橘いずみ） OA：ボヌール、iN BODY"},
+{"date": "2026-11-27", "venue": "jazz&bar SO NICE", "title": "森村献＆佐野聡", "open": null, "start": "19:30", "price": "MC ¥4,000（当日¥4,500）", "ticket": null, "source": "https://ameblo.jp/sonice72/entry-12982746373.html", "desc": "お遍路二人旅2026 森村献/pf、佐野聡/Tb", "performers": null},
+{"date": "2026-11-27", "venue": "Nomad", "title": "HAYATO SATO & FRIENDS Vol.3", "open": "20:00", "start": "20:30", "price": "Music Charge 2,200yen（税込）＋1drink", "ticket": null, "source": "https://nomad-music.net/november-2026/", "desc": "1st 20:30／2nd 21:30。メンバーは決まり次第お知らせします", "performers": null},
+{"date": "2026-11-28", "venue": "Nomad", "title": "CHAKA ライブ with 瀬部妙子", "open": "15:30", "start": "16:00", "price": "Charge 3,000円（別途1ドリンク）", "ticket": null, "source": "https://nomad-music.net/november-2026/", "desc": "Pf. 瀬部妙子 お問い合わせは主催 shikoku.live@gmail.com まで。", "performers": null},
+{"date": "2026-11-28", "venue": "Music Bar RUFFHOUSE", "title": "レコード鑑賞会 vol.70", "open": "18:00", "start": "18:15", "price": "入場料1,000円（飲物代別途要・食べ物のみ持込可）", "ticket": null, "source": null, "desc": "久しぶりに針を落としてみませんか？ 噂のレコード鑑賞会 vol.70 開催決定！ 昭和歌謡からロック、ポップス、ジャズまで音楽が楽しくなるひとときをお過ごしください。 2026年11月28日（土） 噂のレコード鑑賞会 Vol.70 時間：開場18:00／開演18:15／終演22:00（予定） 料金：入場料1,000円（飲物代別途要・食べ物のみ持込可） 会場：Music Bar RUFFHOUSE", "performers": null},
+{"date": "2026-11-28", "venue": "jazz&bar SO NICE", "title": "Noodle Crazy Monkey ➕", "open": null, "start": "19:30", "price": "MC ¥4,000", "ticket": null, "source": "https://ameblo.jp/sonice72/entry-12982746373.html", "desc": "藤原清登/bs、河西那都/vo、廣田健一郎/ds ※その他、、", "performers": null},
+{"date": "2026-11-30", "venue": "jazz&bar SO NICE", "title": "佐藤達哉＋早川由紀子", "open": null, "start": "19:30", "price": "MC ¥4,500", "ticket": null, "source": "https://ameblo.jp/sonice72/entry-12982746373.html", "desc": "ジャズライブ＠高松 佐藤達哉/ts、早川由紀子/pf、廣嶋顕治/bs、生田知保/drums", "performers": null},
+{"date": "2026-12-05", "venue": "Music&Live RUFFHOUSE", "title": "染西まつり『三色スペシャル歌弁当〜それ絶対ウマいやつ〜@高松編』", "open": "15:00", "start": "15:30", "price": "前売￥5,000-／当日￥5,500- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/534261", "source": null, "desc": "三色そろえば、もうごちそう。 染谷俊、西広ショータ、ぶらりふたり放浪記。 それぞれの音、それぞれの色が一つの夜に集まる。 笑って、歌って、胸に残る。 何が飛び出すかは、当日までのお楽しみ。 染西まつり『三色スペシャル歌弁当 〜それ絶対ウマいやつ〜@高松編』 12月5日、高松・RUFFHOUSEへ。 これは……絶対ウマいやつ。 2026年12月5日（土） 出　演：染谷俊、西広ショータ、ぶら", "performers": "染谷俊、西広ショータ、ぶらりふたり放浪記"},
+{"date": "2026-12-06", "venue": "Music&Live RUFFHOUSE", "title": "聞間拓×山口こうじ", "open": "17:30", "start": "18:00", "price": "前売￥3,000-／当日￥4,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/530681", "source": null, "desc": "熱い歌と音楽、そしてその先にあるもの。 「熱いだけじゃない夜」を、ぜひ会場でお楽しみください！ 2026年12月6日（日） 出　演：聞間拓×山口こうじ 公演名：ツーマンライブ〜熱いだけじゃない夜に 時　間：開場17:30／開演18:00 料　金：前売￥3,000-／当日￥4,000- ※ドリンク代別途￥600- 予　約：https://tiget.net/events/530681 会　場：Mu", "performers": "聞間拓×山口こうじ"},
+{"date": "2026-12-13", "venue": "Music&Live RUFFHOUSE", "title": "市川セカイ、前田和亮、KAZU OF THE LEGEND", "open": "18:00", "start": "18:30", "price": "前売￥3,500-／当日￥4,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/534356", "source": null, "desc": "言葉だけじゃ、届かない。 歌だから、届く。 市川セカイ、前田和亮、KAZU OF THE LEGEND。 それぞれの想い、それぞれの物語。 12月13日、RUFFHOUSEで。 あなたの心に、まっすぐ届く歌を。 2026年12月13日（日） 出　演：市川セカイ、前田和亮、KAZU OF THE LEGEND 公演名：君の心に届く歌 時　間：開場18:00／開演18:30 料　金：前売￥3,5", "performers": "市川セカイ、前田和亮、KAZU OF THE LEGEND"},
+{"date": "2026-12-19", "venue": "Music&Live RUFFHOUSE", "title": "ボヌール", "open": "18:30", "start": "19:00", "price": "前売￥1,500-／当日￥2,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/537145", "source": null, "desc": "🎄 クリスマスの夜に、幸せの花束を 今年のクリスマスは、音楽とともに心あたたまるひとときを。 ボヌールがお届けする、クリスマスの特別なライブ。 歌に込められた想いと、優しい音楽に包まれて、幸せな時間を過ごしませんか？ 大切な人と一緒に、もちろんおひとりでも。 RUFFHOUSEで、素敵なクリスマスの夜をお楽しみください。 2026年12月19日（土） 出　演：ボヌール 公演名：クリスマスの夜", "performers": "ボヌール"},
+{"date": "2026-12-20", "venue": "Music&Live RUFFHOUSE", "title": "Nakamura Hak「Plugless（Out-store）Live Tour – 異端」", "open": "17:30", "start": "18:00", "price": null, "ticket": null, "source": null, "desc": "Nakamura Hak「Plugless（Out-store）Live Tour – 異端」 1st E.P. 「白は夢」をご購入頂いた方は無料で入場できる初の全国ツアー「異端」 https://shirowayume.jp/ 2026/12/20 (日) 高松 RUFFHOUSE Open: 17:30 / Start: 18:00", "performers": null},
+{"date": "2026-12-21", "venue": "Music&Live RUFFHOUSE", "title": "Jazz Night（Vo.三木智子、Gt.愛川聡）", "open": "19:00", "start": "19:30", "price": "前売￥3,500-／当日￥4,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/529095", "source": null, "desc": "🎷 Jazz Night @ RUFFHOUSE 心地よいジャズの響きに包まれる、特別な夜。 Vo.三木智子、Gt.愛川聡のデュオでお届けする「Jazz Night @ RUFFHOUSE」。 歌声とギターが織りなす、繊細で豊かな音楽のひとときをお楽しみください。 いつもの夜を少し贅沢に。 RUFFHOUSEで、ゆったりとジャズに浸ってみませんか？ 2026年12月21日 (月) 出　演：V", "performers": "Vo.三木智子、Gt.愛川聡"},
+{"date": "2026-12-26", "venue": "Music Bar RUFFHOUSE", "title": "＜ＤＪイベント＞ ナウなヤングの流行歌", "open": "18:30", "start": "19:00", "price": "500円 ※１オーダー制", "ticket": null, "source": null, "desc": "昭和歌謡ときどき洋楽をレコードでかけます。500曲程のリストから貴方の聞きたい曲を選んでいただくスタイルです。あなたのリクエストカードを西日本放送の中條加菜アナウンサーがディスクジョッキー風に読み上げてくれます。ぜひ曲に対するメッセージや思い出もお書き添えください。冬歌・恋歌を厚めに、また１日遅れのクリスマスソングも選曲しています。ご来場の皆さまにクリスマスプレゼントも用意。ぜひ遊びに来てください", "performers": "クロオとフジタマン"},
+{"date": "2027-01-07", "venue": "Music&Live RUFFHOUSE", "title": "RUFFHOUSE Presents「音楽百景」", "open": "19:00", "start": "19:30", "price": "前売￥2,000-／当日￥2,500- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/537522", "source": null, "desc": "RUFFHOUSE Presents「音楽百景」 ～三つの個性、三つの音楽、それぞれの風景～ 2027年1月7日（木） 出　演：aro、れおん、エキサイト中條 公演名：RUFFHOUSE Presents「音楽百景」 時　間：開場19:00／開演19:30 料　金：前売￥2,000-／当日￥2,500- ※ドリンク代別途￥600- 予　約：https://tiget.net/events/537", "performers": "aro、れおん、エキサイト中條"},
+{"date": "2027-01-19", "venue": "Music&Live RUFFHOUSE", "title": "加藤ヒデキ、嶋田エイジ、エキサイト中條", "open": "19:30", "start": "20:00", "price": "前売￥1,500-／当日￥2,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/529090", "source": null, "desc": "山羊座な男たち 〜Three Singer-Songwriters under the Capricorn〜 誕生日が近い。 3人とも山羊座。 だったら、まとめて祝っちゃおう。 そんなところから始まった、 3人のシンガーソングライターによる合同誕生日ライブ。 加藤ヒデキ、嶋田エイジ、エキサイト中條。 生まれた日も近ければ、 山羊座というところまで一緒。 ・・・とはいえ、 歌も、ギターも、", "performers": "加藤ヒデキ、嶋田エイジ、エキサイト中條"},
+{"date": "2027-01-23", "venue": "Music&Live RUFFHOUSE", "title": "はたなか圭一", "open": "14:00", "start": "14:30", "price": "前売￥3,000-／当日￥4,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/528388", "source": null, "desc": "2027年1月23（土） 出　演：はたなか圭一 公演名：OVERPLAY Kagawa Final -Solo Style- 時　間：開場14:00／開演14:30 料　金：前売￥3,000-／当日￥4,000- ※ドリンク代別途￥600- 販　売：https://tiget.net/events/528388 会　場：Music&Live RUFFHOUSE (https://www.barru", "performers": "はたなか圭一"},
+{"date": "2027-01-29", "venue": "Music&Live RUFFHOUSE", "title": "昭和ハラスメントGIG！vol.4", "open": "19:00", "start": "19:30", "price": "前売￥2,500-／当日￥3,000- ※ドリンク代別途￥600", "ticket": "https://tiget.net/events/534898", "source": null, "desc": "あの熱狂とユーモアが再び！「昭和ハラスメントGIG！vol.4」高松公演 開催決定！ どこか懐かしく、そして最高にエネルギッシュ。独自のセンスと圧倒的な世界観で客席を巻き込む「昭和ハラスメントGIG！」の第4弾が、満を持して開催されます。アコースティックの心地よさの中に、クスッと笑えて胸が熱くなる唯一無二のエンターテインメント。RUFFHOUSEならではの至近距離で、お酒を片手に誰もが笑顔になれ", "performers": "FLASH ザ 徒歩5分、加藤ヒデキ、エキサイト中條"},
+{"date": "2027-01-31", "venue": "Music&Live RUFFHOUSE", "title": "Pink Panther☆", "open": "14:00", "start": "14:30", "price": "前売￥1,500-／当日￥2,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/533897", "source": null, "desc": "言葉はいらない。音で紡ぐDialogue。 鍵盤ハーモニカ、ピアノ、カホン。 3人の音が会話するように重なり、 ここでしか生まれない音の景色を描き出す。 Pink Panther☆ 初のRUFFHOUSEでのワンマンライブ「Dialogue」！ 2027年1月31日（日） 出　演：Pink Panther☆ 公演名：ワンマンライブ「Dialogue」 時　間：開場14:00／開演14:30 ", "performers": "Pink Panther☆"},
+{"date": "2027-02-02", "venue": "Music&Live RUFFHOUSE", "title": "Yoshino&Masae", "open": "19:00", "start": "19:30", "price": "前売￥3,000-／当日￥3,500- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/537501", "source": null, "desc": "全国ツアー2027、Yoshino&Masaeが高松にやって来ます！ 心に響く歌と音楽を、じっくりと楽しむ特別な夜。オープニングアクトにはボヌールを迎えてお届けします。Yoshino&Masaeの魅力あふれるステージと、ボヌールの歌声が彩る一夜を、ぜひRUFFHOUSEでお楽しみください！ 2027年2月2日（火） 出　演：Yoshino&Masae　OA:ボヌール 公演名：全国ツアー 2027", "performers": "Yoshino&Masae OA:ボヌール"},
+{"date": "2027-02-07", "venue": "Music&Live RUFFHOUSE", "title": "Yesterday & Today ～昨日の音を今日の唄に～", "open": "17:30", "start": "18:00", "price": "前売￥1,500-／当日￥2,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/534795", "source": null, "desc": "70'sに魅せられた3組のシンガーソングライターが贈る、世代を超えて受け継がれたDNAが紡ぐ自分たちにしか表せないメロディと言葉で、今日の唄に。 ここでしか聴けない曲を。 2027年2月7日（日） 公　演：Yesterday & Today ～昨日の音を今日の唄に～ 出　演：嶋田エイジ、Fullcount！、歳時記 時　間：開場17:30／開演18:00 料　金：前売￥1,500-／当日￥2,0", "performers": "嶋田エイジ、Fullcount！、歳時記"},
+{"date": "2027-02-11", "venue": "Music&Live RUFFHOUSE", "title": "とびだせ！シンガーソングライター VOL.8", "open": "17:00", "start": "17:30", "price": "前売￥2,500-／当日￥3,000- ※ドリンク代別途￥600-", "ticket": null, "source": null, "desc": "それぞれの歌、それぞれの物語。 4つの個性が、高松の夜に響き合う。 「とびだせ！シンガーソングライター VOL.8」開催！ 2027年2月11日（木・祝） 公　演：とびだせ！シンガーソングライター VOL.8 出　演：井上美喜、加藤ヒデキ、嶋田エイジ　ゲスト：佐藤亙 時　間：開場17:00／開演17:30 料　金：前売￥2,500-／当日￥3,000- ※ドリンク代別途￥600- 会　場：Mus", "performers": "井上美喜、加藤ヒデキ、嶋田エイジ ゲスト：佐藤亙"},
+{"date": "2027-02-13", "venue": "Music&Live RUFFHOUSE", "title": "小竹直 and 魚谷のぶまさ Duo", "open": "19:00", "start": "19:30", "price": "前売￥4,000-／当日￥4,500- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/537156", "source": null, "desc": "ソウル、ブルース、そしてR&B。 心に響く歌声と、味わい深いギター、躍動するウッドベース。 ニューヨークのアポロシアターでも喝采を浴びた小竹直のソウルフルな歌声とギター、そしてRay Brownに傾倒し、ジャズからディスコ、ソウルまで幅広く活躍する魚谷のぶまさのウッドベース。二人が生み出す、ジャンルを超えた極上のグルーヴをお楽しみください。 オープニングアクトには、Blues、Soul Jaz", "performers": "小竹直 and 魚谷のぶまさ Duo OA：デビッド近藤 Duo"},
+{"date": "2027-03-15", "venue": "Music&Live RUFFHOUSE", "title": "JabBee", "open": "19:00", "start": "19:30", "price": "前売￥2,500-／当日￥3,000- ※ドリンク代別途￥600-", "ticket": "https://tiget.net/events/535524", "source": null, "desc": "**忘れていた景色が、歌でよみがえる。** JabBeeが奏でるのは、 切なくて、暖かくて、 どこか懐かしい日本語のポップソング。 時代もジャンルも越えて、 心の奥にそっと触れる音楽。 アルバム「ノスタルジア」を携えた旅が、 高松へ。 2027年3月15日（月） 出　演：JabBee　OA：タダカズノリ 公　演：ノスタルジア リリースツアー ＜高松公演＞ 時　間：開場19:00／開演19:", "performers": "JabBee OA：タダカズノリ"},
+{"date": "2027-04-07", "venue": "Music&Live RUFFHOUSE", "title": "【出演者募集】FIRST STEP 〜RUFFHOUSEのブッキングライブ〜", "open": "19:00", "start": "19:30", "price": "前売¥1,500／当日¥2,000（+1ドリンク¥600）", "ticket": "https://ruffhouse.bitfan.id/schedules/130148?fbclid=IwZXh0bgNhZW0CMTAAcGRvZgVzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEfJrB968y2tjph281UgCDua654AprvjtzdZCNBPt-VPOU2TsLWQfyEUQq8GKA_aem_uP9BMtsbdaNJVdvEJUOC-A", "source": null, "desc": "【出演者募集】FIRST STEP 〜RUFFHOUSEのブッキングライブ〜 「FIRST STEP」は、Music&Live RUFFHOUSEが定期開催するブッキングライブです。これからステージ経験を積みたい方、地元で活動の場を広げたい方のための、最初の一歩の場所です。 2027年4月7日（水）開催回の出演者を募集します。 日時：2027年4月7日（水）開場19:00／開演19:30会場：", "performers": null}
 ];
+      /* RAW_EVENTS（date/venue/title/open/start/price/ticket/source/desc/performers、null=未定・なし）を表示用に変換 */
+var VENUE_FALLBACK_SRC = {ruff:SRC.ruff, sonice:SRC.sonice, nomad:SRC.nomad, third:"https://thirdstone.info/", sanko:"https://san-ko.site/schedule/", other:SRC.ruff};
+function venueIdOf(name){
+if (name.indexOf("RUFFHOUSE")!==-1) return "ruff";
+if (name.indexOf("SO NICE")!==-1) return "sonice";
+if (name.indexOf("Nomad")!==-1) return "nomad";
+if (name.indexOf("THIRD STONE")!==-1) return "third";
+if (name.indexOf("燦庫")!==-1 || name.indexOf("SANKO")!==-1) return "sanko";
+return "other";
+}
+function trimStr(s){ return String(s||"").replace(/^\s+|\s+$/g,"");}
+function derivePerfNote(e, vid){
+var perf = e.performers || "", note = "", desc = e.desc || "";
+if (perf) return {perf:perf, note:note};
+if (vid==="sanko"){
+if (desc.indexOf("\u3010ACT\u3011")===0){
+var rest = desc.slice(5);
+var oi = rest.indexOf("\u3010OPEN");
+if (oi!==-1) rest = rest.slice(0, oi);
+var ti = rest.indexOf("TICKET");
+if (ti!==-1) rest = rest.slice(0, ti);
+rest = trimStr(rest);
+if (rest && rest!=="TBA") perf = rest;
+}
+if (!perf) note = "詳細は出典リンク先でご確認ください。";
+return {perf:perf, note:note};
+}
+if (vid==="sonice"){
+if (desc.indexOf("/")!==-1){
+perf = desc.replace(/^LIVE TOUR 2026 /,"").replace(/^お遍路二人旅2026 /,"").replace(/^ジャズライブ＠高松 /,"");
+perf = trimStr(perf.split("※")[0]);
+} else if (desc) { note = desc;}
+return {perf:perf, note:note};
+}
+if (vid==="nomad"){
+if (desc.indexOf("1st ")===0){ note = desc;}
+else if (desc.indexOf("お問い合わせは")!==-1){ var p1 = desc.split("お問い合わせは"); perf = trimStr(p1[0]); note = "お問い合わせは" + p1[1];}
+else if (desc.indexOf("毎月第３土曜は")!==-1){ var p2 = desc.split("毎月第３土曜は"); perf = trimStr(p2[0]); note = "毎月第３土曜は" + p2[1];}
+else if (desc){ perf = trimStr(desc.replace(" MANHATTANZによるライブです",""));}
+return {perf:perf, note:note};
+}
+if (vid==="third"){
+var oi2 = desc.indexOf("OA:");
+if (oi2!==-1){
+var seg = desc.slice(oi2);
+var ci = seg.indexOf("※"); if (ci!==-1) seg = seg.slice(0, ci);
+var ki = seg.indexOf("お問い合わせ"); if (ki!==-1) seg = seg.slice(0, ki);
+perf = trimStr(seg);
+}
+return {perf:perf, note:note};
+}
+if (vid==="ruff"){
+if (e.title.indexOf("出演者募集")!==-1){ perf = "出演者募集中"; return {perf:perf, note:note};}
+if (e.title.indexOf("Plugless")!==-1){ note = "1st E.P.「白は夢」をご購入頂いた方は無料で入場できる初の全国ツアー「異端」です。"; return {perf:perf, note:note};}
+if (desc){
+var di = desc.indexOf("。");
+note = di!==-1? desc.slice(0, di+1): desc;
+}
+return {perf:perf, note:note};
+}
+return {perf:perf, note:note};
+}
+var EVENTS = RAW_EVENTS.map(function(e){
+var vid = venueIdOf(e.venue);
+var pn = derivePerfNote(e, vid);
+return {d:e.date, v:vid, sub:e.venue, title:e.title, perf:pn.perf, note:pn.note, desc:e.desc||"",
+open:e.open||"", start:e.start||"", price:e.price||"", ticket:e.ticket||null,
+src:e.source || VENUE_FALLBACK_SRC[vid]};
+});
 
 var VENUES = [
 {id:"all", label:{ja:"すべて", en:"All"}},
@@ -399,10 +465,11 @@ var VENUES = [
 {id:"sonice", label:{ja:"SO NICE", en:"SO NICE"}, badge:"b-sonice"},
 {id:"nomad", label:{ja:"Nomad", en:"Nomad"}, badge:"b-nomad"},
 {id:"third", label:{ja:"THIRD STONE", en:"THIRD STONE"}, badge:"b-third"},
-{id:"sanko", label:{ja:"燦庫", en:"SANKO"}, badge:"b-sanko"}
+{id:"sanko", label:{ja:"燦庫", en:"SANKO"}, badge:"b-sanko"},
+{id:"other", label:{ja:"その他", en:"Other"}, badge:"b-other"}
 ];
-var BADGE = {ruff:"RUFFHOUSE", sonice:"SO NICE", nomad:"Nomad", third:"THIRD STONE", sanko:"燦庫"};
-var BADGE_EN = {ruff:"RUFFHOUSE", sonice:"SO NICE", nomad:"Nomad", third:"THIRD STONE", sanko:"SANKO"};
+var BADGE = {ruff:"RUFFHOUSE", sonice:"SO NICE", nomad:"Nomad", third:"THIRD STONE", sanko:"燦庫", other:"その他"};
+var BADGE_EN = {ruff:"RUFFHOUSE", sonice:"SO NICE", nomad:"Nomad", third:"THIRD STONE", sanko:"SANKO", other:"Other"};
 var DOW = ["日","月","火","水","木","金","土"];
 var DOW_EN = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 var MON_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -414,7 +481,7 @@ ja:{
   docTitle:"高松ライブカレンダー（公開版）",
   title:"高松ライブカレンダー",
   lede:"高松市内の小さなライブハウス、カフェ、バーで開かれる公演を、日付順にまとめたカレンダーです。気になる一夜を見つけてください。",
-  updatedLabel:"最終更新：", updatedDate:"2026年11月9日", countLabel:"掲載公演：", countSuffix:"公演",
+  updatedLabel:"最終更新：", updatedDate:"2026年11月10日", countLabel:"掲載公演：", countSuffix:"公演",
   searchPh:"出演者・公演名で検索", searchAria:"出演者・公演名で検索",
   chipsLabel:"会場で絞り込み", listLabel:"これからのライブ一覧",
   emptyBig:"条件に合う公演がありません", emptySub:"検索ワードや会場フィルタを変えてお試しください。", clear:"絞り込みをクリア",
@@ -448,13 +515,13 @@ ja:{
   },
   foot1:"このカレンダーは、高松市内の小規模なライブハウス・カフェ・バー（RUFFHOUSE／SO NICE／Nomad／THIRD STONE／燦庫）の公演を中心に掲載しています。詳細は各公演の出典リンク先でご確認ください。",
   foot2:"公演内容・時刻・料金は変更になる場合があります。お出かけ前に、出典リンク先の公式情報で最新情報をご確認ください。",
-  footUpd:"最終更新：2026年11月9日（掲載情報は各会場の公式発表に基づきます）"
+  footUpd:"最終更新：2026年11月10日（掲載情報は各会場の公式発表に基づきます）"
 },
 en:{
   docTitle:"Takamatsu Live Calendar",
   title:"Takamatsu Live Calendar",
   lede:"A date-by-date guide to live shows at Takamatsu's small live houses, cafés and bars. Find a night out that suits you.",
-  updatedLabel:"Last updated: ", updatedDate:"Nov 9, 2026", countLabel:"Shows listed: ", countSuffix:" shows",
+  updatedLabel:"Last updated: ", updatedDate:"Nov 10, 2026", countLabel:"Shows listed: ", countSuffix:" shows",
   searchPh:"Search by artist or show title", searchAria:"Search by artist or show title",
   chipsLabel:"Filter by venue", listLabel:"Upcoming live shows",
   emptyBig:"No shows match your filters", emptySub:"Try a different search term or venue filter.", clear:"Clear filters",
@@ -488,7 +555,7 @@ en:{
   },
   foot1:"This calendar focuses on shows at small live houses, cafés and bars in Takamatsu (RUFFHOUSE / SO NICE / Nomad / THIRD STONE / SANKO). See each show's source link for full details.",
   foot2:"Lineups, times and prices may change. Please check the official source link for the latest information before you go.",
-  footUpd:"Last updated: Nov 9, 2026 (based on each venue's official announcements)"
+  footUpd:"Last updated: Nov 10, 2026 (based on each venue's official announcements)"
 }};
 
 var state = { venue:"all", q:"", lang:"ja", period:"all"};
@@ -499,6 +566,9 @@ function badgeOf(v){ return state.lang==="en"? BADGE_EN[v]: BADGE[v]; }
 function localizeText(s){
 if (state.lang!=="en" || !s) return s||"";
 var pairs = [
+["※ドリンク代別途￥600-"," (+ ¥600 drink charge)"],
+["※ドリンク代別途￥600"," (+ ¥600 drink charge)"],
+["￥","¥"],
 ["詳細は出典リンク先でご確認ください。","See the official source link for details."],
 ["ミュージックチャージ","Music charge"],
 ["（ドリンク代別途 ¥600）"," (+ ¥600 drink charge)"],
@@ -589,6 +659,7 @@ function todayStr(){ var t=new Date(); return t.getFullYear()+"-"+pad(t.getMonth
 /* 会場フィルタ */
 VENUES.forEach(function(v){
 var n = v.id==="all"? EVENTS.length: EVENTS.filter(function(e){return e.v===v.id;}).length;
+if (v.id==="other" && n===0) return;
 var b = document.createElement("button");
 b.type = "button"; b.className = "chip"; b.dataset.venue = v.id;
 b.setAttribute("aria-pressed", v.id==="all"? "true": "false");
@@ -631,7 +702,7 @@ var endStr = end.getFullYear()+"-"+pad(end.getMonth()+1)+"-"+pad(end.getDate());
 if (e.d < t0 || e.d > endStr) return false;
 }
 if (!state.q) return true;
-var hay = (e.title+" "+(e.sub2||"")+" "+(e.perf||"")+" "+BADGE[e.v]+" "+BADGE_EN[e.v]).toLowerCase();
+var hay = (e.title+" "+(e.sub2||"")+" "+(e.perf||"")+" "+(e.desc||"")+" "+BADGE[e.v]+" "+BADGE_EN[e.v]).toLowerCase();
 return hay.indexOf(state.q)!== -1;
 }
 
